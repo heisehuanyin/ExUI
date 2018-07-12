@@ -4,6 +4,7 @@ import ws.exui.binding.ExBindingBridge;
 import ws.exui.binding.ExBoolean;
 import ws.exui.binding.ExDouble;
 import ws.exui.binding.ExListWap;
+import ws.exui.binding.ExO4Binding;
 import ws.exui.binding.ExString;
 
 public class BindingTest {
@@ -87,5 +88,16 @@ public class BindingTest {
 		t.testDouble();
 		t.testString();
 		t.testList();
+		t.testObject();
 	}
+	private void testObject() {
+		// TODO Auto-generated method stub
+		
+	}
+}
+
+class ExampleObject extends ExO4Binding{
+	public ExString name = new ExString();
+	public ExDouble number = new ExDouble();
+	
 }
