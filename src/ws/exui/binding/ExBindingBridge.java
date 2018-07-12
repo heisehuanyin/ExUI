@@ -14,6 +14,7 @@ public class ExBindingBridge {
 		if(this.bridgeType == ExBindingBridge.POINT_2_POINT) {
 			end.addChangeListener(front);
 		}
+		front.autoPush();
 	}
 	
 	public void Binding(I_ListCommon<?> front, I_ListCommon<?> end) {
@@ -21,6 +22,8 @@ public class ExBindingBridge {
 		if(this.bridgeType == ExBindingBridge.POINT_2_POINT) {
 			end.addChangeListener(front);
 		}
+		end.clearAll();
+		front.autoPush();
 	}
 	
 }

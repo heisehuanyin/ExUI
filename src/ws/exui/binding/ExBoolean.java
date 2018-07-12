@@ -46,5 +46,9 @@ public class ExBoolean implements I_ValueCommon{
 	public boolean getValue() {
 		return this.val;
 	}
+	@Override
+	public void autoPush() {
+		this.setValue(val);
+	}
 
 }

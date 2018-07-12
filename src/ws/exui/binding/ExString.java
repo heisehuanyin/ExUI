@@ -45,5 +45,9 @@ public class ExString implements I_ValueCommon{
 	public String getValue() {
 		return this.val;
 	}
+	@Override
+	public void autoPush() {
+		this.setValue(val);
+	}
 
 }

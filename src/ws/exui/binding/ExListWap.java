@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ws.exui.event.DataEventReport;
+import ws.exui.event.ElementEventReport;
 import ws.exui.event.I_DataEventReport;
+import ws.exui.event.I_ElementEventReport;
 
 public class ExListWap<E> implements I_ListCommon<E>{
 	private ArrayList<I_ListChangeListener> l_list = new ArrayList<>();
@@ -22,13 +24,13 @@ public class ExListWap<E> implements I_ListCommon<E>{
 			this.l_list.remove(l);
 	}
 	
-	private void __invokeAll_Remove(I_DataEventReport report) {
+	private void __invokeAll_Remove(I_ElementEventReport report) {
 		report.addInvokePath(this);
 		for(I_ListChangeListener l:l_list) {
 			l.targetRemove(report);
 		}
 	}
-	private void __invokeAll_Insert(I_DataEventReport report) {
+	private void __invokeAll_Insert(I_ElementEventReport report) {
 		report.addInvokePath(this);
 		for(I_ListChangeListener l:l_list) {
 			l.targetInsert(report);
@@ -39,8 +41,10 @@ public class ExListWap<E> implements I_ListCommon<E>{
 	public void insertChildAtIndex(E x, int index) {
 		this.trueList.add(index, x);
 		
-		I_DataEventReport report = new DataEventReport(this, 
+		I_ElementEventReport<Integer, E> report = new ElementEventReport<>(this, 
 				this.hashCode()+ "insert:position="+ index+ ",obj="+ x.hashCode());
+		report.setKeyChild(index);
+		report.setTargetChild(x);
 		this.__invokeAll_Insert(report);
 	}
 
@@ -50,8 +54,9 @@ public class ExListWap<E> implements I_ListCommon<E>{
 			return;
 		this.trueList.remove(x);
 
-		I_DataEventReport report = new DataEventReport(this, 
+		I_ElementEventReport<Integer,E> report = new ElementEventReport<>(this, 
 				this.hashCode()+ "remove:obj="+ x.hashCode());
+		report.setTargetChild(x);
 		this.__invokeAll_Remove(report);
 	}
 
@@ -66,19 +71,42 @@ public class ExListWap<E> implements I_ListCommon<E>{
 	}
 
 	@Override
-	public void targetRemove(I_DataEventReport report) {
+	public void autoPush() {
+		ArrayList<E> bakList = new ArrayList<>();
+		bakList.addAll(trueList);
+		trueList.clear();
+		for(E a:bakList) {
+			this.insertChildAtIndex(a, getChildCount());
+		}
+	}
+
+	@Override
+	public void targetRemove(I_ElementEventReport<?, ?> report) {
 		if(report.isPathContains(this))
 			return;
 	
 		this.__invokeAll_Remove(report);
+		
+		E tobj = (E) report.getTargetChild();
+		if(this.trueList.contains(tobj))
+			this.trueList.remove(tobj);
 	}
 
 	@Override
-	public void targetInsert(I_DataEventReport report) {
+	public void targetInsert(I_ElementEventReport<?, ?> report) {
 		if(report.isPathContains(this))
 			return;
 	
 		this.__invokeAll_Insert(report);
+		
+		E tobj = (E) report.getTargetChild();
+		int index = (int) report.getKeyChild();
+		this.trueList.add(index, tobj);
+	}
+
+	@Override
+	public void clearAll() {
+		this.trueList.clear();
 	}
 	
 

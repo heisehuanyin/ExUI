@@ -44,5 +44,9 @@ public class ExDouble implements I_ValueCommon {
 	public double getValue() {
 		return this.val;
 	}
+	@Override
+	public void autoPush() {
+		this.setValue(this.val);
+	}
 
 }

@@ -19,4 +19,7 @@ public interface I_ListCommon<E> extends I_ListChangeListener{
 
 	E getChildAtIndex(int index);
 
+	void autoPush();
+	
+	void clearAll();
 }
