@@ -2,7 +2,7 @@ package ws.exui.binding;
 
 import java.util.ArrayList;
 
-import ws.exui.event.ValueChangeEvent;
+import ws.exui.event.ValueChangedReport;
 
 public abstract class ExDouble implements I_ValueChangeListener, I_BindingObject {
 	private double value = 0;
@@ -22,7 +22,7 @@ public abstract class ExDouble implements I_ValueChangeListener, I_BindingObject
 	}
 
 	@Override
-	public void valueChanged(ValueChangeEvent e) {
+	public void valueChanged(ValueChangedReport e) {
 		this.setValueInner(value, (I_ValueChangeListener) e.getSource());
 		this.externalChange();
 	}
@@ -48,7 +48,7 @@ public abstract class ExDouble implements I_ValueChangeListener, I_BindingObject
 		for(I_ValueChangeListener i:listeners ) {
 			if(i == except)
 				continue;
-			ValueChangeEvent e = new ValueChangeEvent(this, "exint value change");
+			ValueChangedReport e = new ValueChangedReport(this, "exint value change");
 			i.valueChanged(e);
 		}
 	}

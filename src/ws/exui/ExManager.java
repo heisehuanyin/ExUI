@@ -7,6 +7,20 @@ import ws.exui.uiwin.I_Window;
 public class ExManager implements Runnable{
 	public ExManager() {}
 	
+	/**
+	 * 打开指定窗口
+	 * @param exw 指定窗口实例*/
+	public void openWindow(I_Window exw) {
+		exw.__display();
+	}
+
+
+
+	@Override
+	public void run() {
+		// TODO 处理各种UI相关事件
+		
+	}
 	
 
 	public static void main(String[] args) {
@@ -23,18 +37,5 @@ public class ExManager implements Runnable{
 		new Thread(vm).start();
 	}
 
-
-	
-	private void openWindow(I_Window exw) {
-		exw.__display();
-	}
-
-
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

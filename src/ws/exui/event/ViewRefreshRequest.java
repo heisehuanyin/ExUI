@@ -2,11 +2,11 @@ package ws.exui.event;
 
 import ws.exui.uiview.I_View;
 
-public class ViewFreshedEvent implements I_UIExEvent {
+public class ViewRefreshRequest implements I_UIExEvent {
 	private I_View source = null;
 	private String msg = "";
 	
-	public ViewFreshedEvent(I_View source, String msg) {
+	public ViewRefreshRequest(I_View source, String msg) {
 		this.source = source;
 		this.msg = msg;
 	}

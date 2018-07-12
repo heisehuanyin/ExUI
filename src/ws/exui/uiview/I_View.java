@@ -1,6 +1,8 @@
 package ws.exui.uiview;
 
 import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.Area;
 
 import ws.exui.event.I_UIExEvent;
 import ws.exui.uibase.I_GraphicsPort;
@@ -79,6 +81,12 @@ public interface I_View {
 	void transform_SetTransform(I_Transform trans);
 
 	/**
+	 * 获取Transform单元
+	 * @return 本单元的Transform*/
+	I_Transform transform_GetTransform();
+	
+	
+	/**
 	 * 获取次视图的父视图
 	 * @return 父视图实例*/
 	I_View __view_GetParentView();
@@ -91,28 +99,32 @@ public interface I_View {
 	/**
 	 * 获取父视图的图形绘制端口，用于递归绘制子视图
 	 * @return 返回的父视图接口*/
-	I_GraphicsPort getGraphicsPort();
+	I_GraphicsPort gport_getGraphicsPort();
 
 	/**
 	 * 设置长度宽度是否自适应，默认是自适应的
 	 * @param width 宽度自适应
 	 * @param height 高度自适应*/
-	void bool_SetAdjustAuto(boolean width, boolean height);
+	void adjust_SetAutoAdjust(boolean width, boolean height);
 
 	/**
 	 * 检测是否宽度自适应
 	 * @return 结果*/
-	boolean bool_IsAutoWidth();
+	boolean adjust_IsAutoWidth();
 
 	/**
 	 * 检测是否高度自适应
 	 * @return 结果*/
-	boolean bool_IsAutoHeight();
+	boolean adjust_IsAutoHeight();
 
 	/**
 	 * 设置组件颜色
 	 * @param c 指定颜色颜色*/
 	void color_SetColor(Color c);
+	/**
+	 * 获取组件颜色
+	 * @return 组件颜色*/
+	Color color_GetColor();
 
 
 	/**
@@ -122,14 +134,19 @@ public interface I_View {
 	/**
 	 * 重置View状态为新鲜
 	 * @param isfresh TODO*/
-	void bool_SetFresh(boolean isfresh);
+	void fresh_SetFresh(boolean isfresh);
 	/**
 	 * 测试状态是否新鲜
 	 * @return 新鲜与否*/
-	boolean bool_IsFresh();
+	boolean fresh_IsFresh();
 	/**
 	 * 配送UI事件，从子视图一路上溯
 	 * @param e UI事件*/
 	void event_DispatchUIEvent(I_UIExEvent e);
 
+	/**
+	 * 获取clip图形，此图形用于设置clip区域，不对View内部填充图形进行处理，此函数将传入的图形与本视图可视区域结合进行处理，传出子视图可视图形
+	 * @param shape 传入的图形
+	 * @return 层层处理获取到的可见图形区域*/
+	Area clip_getClipShape(Area shape);
 }

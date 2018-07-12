@@ -1,7 +1,7 @@
 package ws.exui.binding;
 
-import ws.exui.event.ValueChangeEvent;
+import ws.exui.event.ValueChangedReport;
 
 public interface I_ValueChangeListener {
-	void valueChanged(ValueChangeEvent e);
+	void valueChanged(ValueChangedReport e);
 }

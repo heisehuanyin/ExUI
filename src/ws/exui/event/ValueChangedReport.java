@@ -1,10 +1,10 @@
 package ws.exui.event;
 
-public class ValueChangeEvent implements I_ExEvent{
+public class ValueChangedReport implements I_ExEvent{
 	private Object source = null;
 	private String msg = "valueChange";
 	
-	public ValueChangeEvent(Object source, String msg) {
+	public ValueChangedReport(Object source, String msg) {
 		this.source = source;
 		this.msg = msg;
 	}

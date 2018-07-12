@@ -1,5 +1,7 @@
 package ws.exui.uiwin;
 
+import java.awt.Shape;
+
 import ws.exui.uibase.I_GraphicsPort;
 import ws.exui.uibase.I_Point;
 import ws.exui.uibase.I_Size;
@@ -29,7 +31,7 @@ public class ExSplitPane extends WView {
 			//统计basicWidth总占用，统计AutoWidth==ture设置子视图数量
 			for(int i=0;i<count;++i) {
 				I_View one = this.view_GetChildAtIndex(i);
-				if(one.bool_IsAutoWidth()) {
+				if(one.adjust_IsAutoWidth()) {
 					++adjnum;
 				}
 				basicWidths += one.size_GetBasicSize().getWidth() + 
@@ -43,7 +45,7 @@ public class ExSplitPane extends WView {
 			//调整每个组件的尺寸
 			for(int i=0;i<count;++i) {
 				I_View one = this.view_GetChildAtIndex(i);
-				if(one.bool_IsAutoWidth()) {
+				if(one.adjust_IsAutoWidth()) {
 					I_Size vSize = new WSize(one.size_GetBasicSize().getWidth() + everyAdj,
 							one.size_GetVisibleSize().getHeight());
 					one.size_SetVisibleSize(vSize);
@@ -64,7 +66,7 @@ public class ExSplitPane extends WView {
 			double basicHeights = 0;
 			for(int i=0;i<count;++i) {
 				I_View one = this.view_GetChildAtIndex(i);
-				if(one.bool_IsAutoHeight()) {
+				if(one.adjust_IsAutoHeight()) {
 					++adjnum;
 				}
 				basicHeights += one.size_GetBasicSize().getHeight()+
@@ -75,7 +77,7 @@ public class ExSplitPane extends WView {
 			double offSet = 0;
 			for(int i=0; i< count; ++i) {
 				I_View one = this.view_GetChildAtIndex(i);
-				if(one.bool_IsAutoHeight()) {
+				if(one.adjust_IsAutoHeight()) {
 					I_Size vSize = new WSize(one.size_GetVisibleSize().getWidth(),
 							one.size_GetBasicSize().getHeight() + everyAdj);
 					one.size_SetVisibleSize(vSize);
@@ -96,8 +98,8 @@ public class ExSplitPane extends WView {
 
 	@Override
 	protected void __paintItSelf(I_GraphicsPort port) {
-		port.fillRectangle(new WPoint(0,0), this.size_GetVisibleSize());
 	}
+
 
 
 }

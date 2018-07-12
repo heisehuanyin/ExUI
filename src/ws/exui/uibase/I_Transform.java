@@ -1,11 +1,10 @@
 package ws.exui.uibase;
 
+import java.awt.geom.AffineTransform;
+
 public interface I_Transform {
-
 	/**
-	 * 将本视图的逻辑坐标点转化为实际坐标点
-	 * @param point 逻辑坐标点
-	 * @return 实际坐标点*/
-	I_Point translate(I_Point point);
-
+	 * 获得Transform单元中状态数据，替代View中的空白状态
+	 * @return 既定的状态数据*/
+	AffineTransform getAffineTransform();
 }

@@ -1,17 +1,19 @@
 package ws.exui.uiview;
 
 import java.awt.Color;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Area;
 import java.util.ArrayList;
 
 import ws.exui.event.I_UIExEvent;
-import ws.exui.event.ViewFreshedEvent;
-import ws.exui.uibase.I_Clip;
+import ws.exui.event.ViewRefreshRequest;
+import ws.exui.uibase.EmptyTransform;
 import ws.exui.uibase.I_GraphicsPort;
 import ws.exui.uibase.I_Margin;
 import ws.exui.uibase.I_Point;
 import ws.exui.uibase.I_Size;
 import ws.exui.uibase.I_Transform;
-import ws.exui.uibase.ViewRectClip;
 import ws.exui.uibase.WGraphicsPort;
 import ws.exui.uibase.WMargin;
 import ws.exui.uibase.WPoint;
@@ -23,59 +25,66 @@ public abstract class WView implements I_View {
 	private I_Point origin = new WPoint(0, 0);
 	private I_Margin margin = new WMargin(0, 0, 0, 0);
 	private ArrayList<I_View> children = new ArrayList<>();
-	private I_GraphicsPort port = new WGraphicsPort();
+	private I_GraphicsPort port = new WGraphicsPort(this);
 	private I_View parent = null;
 	private boolean width_auto = true;
 	private boolean height_auto = true;
-	private I_Clip clip = new ViewRectClip(this);
 	private boolean isFresh = true;
+	private Color c = Color.white;
+	private I_Transform trans = new EmptyTransform();
 
-	public WView() {
-		//设置绘制约束，一般不会变了
-		this.port.setClip(clip);
-		this.port.initGraphicsPort(this);
-	}
+	public WView() {}
+	
 	@Override
-	public void bool_SetFresh(boolean isfresh) {
+	public void fresh_SetFresh(boolean isfresh) {
 		this.isFresh = isfresh;
 	}
 	@Override
-	public boolean bool_IsFresh() {
+	public boolean fresh_IsFresh() {
 		return this.isFresh;
 	}
 	
 	@Override
-	public void bool_SetAdjustAuto(boolean width, boolean height) {
+	public void adjust_SetAutoAdjust(boolean width, boolean height) {
 		this.width_auto = width;
 		this.width_auto = height;
-		this.bool_SetFresh(true);
-		I_UIExEvent e = new ViewFreshedEvent(this, "设置了自适应");
+		this.fresh_SetFresh(true);
+		I_UIExEvent e = new ViewRefreshRequest(this, "设置了自适应");
 		this.event_DispatchUIEvent(e);
 	}
 	@Override
-	public boolean bool_IsAutoWidth() {return this.width_auto;}
+	public boolean adjust_IsAutoWidth() {return this.width_auto;}
 	@Override
-	public boolean bool_IsAutoHeight() {return this.height_auto;}
+	public boolean adjust_IsAutoHeight() {return this.height_auto;}
 
 	
 	@Override
 	public void color_SetColor(Color c) {
 		if(c != null) {
-			this.port.setColor(c);
-			this.bool_SetFresh(true);
-			I_UIExEvent e = new ViewFreshedEvent(this, "设置了Color："+c.toString());
+			this.c = c;
+			this.fresh_SetFresh(true);
+			I_UIExEvent e = new ViewRefreshRequest(this, "设置了Color："+c.toString());
 			this.event_DispatchUIEvent(e);
 		}
 	}
 	
 	@Override
+	public Color color_GetColor() {
+		return this.c;
+	}
+	
+	@Override
 	public void transform_SetTransform(I_Transform trans) {
 		if(trans != null) {
-			this.port.setTransform(trans);
-			this.bool_SetFresh(true);
-			I_UIExEvent e = new ViewFreshedEvent(this, "设置了转换器："+trans.toString());
+			this.trans = trans;
+			this.fresh_SetFresh(true);
+			I_UIExEvent e = new ViewRefreshRequest(this, "设置了转换器："+trans.toString());
 			this.event_DispatchUIEvent(e);
 		}
+	}
+	@Override
+	public I_Transform transform_GetTransform() {
+		return null;
 	}
 
 	public void size_SetBasicSize(I_Size bSize) {
@@ -92,8 +101,9 @@ public abstract class WView implements I_View {
 		if(vSize.getWidth() > this.visibleSize.getWidth() &&
 				vSize.getHeight() > this.visibleSize.getHeight()) {
 			this.visibleSize = vSize;
-			this.bool_SetFresh(true);
-			I_UIExEvent e = new ViewFreshedEvent(this, "重置了视图尺寸："+vSize.toString());
+			this.fresh_SetFresh(true);
+			
+			I_UIExEvent e = new ViewRefreshRequest(this, "重置了视图尺寸："+vSize.toString());
 			this.event_DispatchUIEvent(e);
 		}
 	}
@@ -107,8 +117,8 @@ public abstract class WView implements I_View {
 	public void margin_SetMargin(I_Margin nMargin) {
 		if(nMargin != null) {
 			this.margin = nMargin;
-			this.bool_SetFresh(true);
-			I_UIExEvent e = new ViewFreshedEvent(this, "重设了视图边距："+nMargin.toString());
+			this.fresh_SetFresh(true);
+			I_UIExEvent e = new ViewRefreshRequest(this, "重设了视图边距："+nMargin.toString());
 			this.event_DispatchUIEvent(e);
 		}
 	}
@@ -122,8 +132,8 @@ public abstract class WView implements I_View {
 	public void point_SetOriginPoint(I_Point origin) {
 		if(origin != null) {
 			this.origin = origin;
-			this.bool_SetFresh(true);
-			I_UIExEvent e = new ViewFreshedEvent(this, "重置了原点："+origin.toString());
+			this.fresh_SetFresh(true);
+			I_UIExEvent e = new ViewRefreshRequest(this, "重置了原点："+origin.toString());
 			this.event_DispatchUIEvent(e);
 		}
 	}
@@ -138,8 +148,8 @@ public abstract class WView implements I_View {
 	public void view_InsertViewAtIndex(I_View view, int index) {
 		view.__view_SetParentView(this);
 		this.children.add(index, view);
-		this.bool_SetFresh(true);
-		I_UIExEvent e = new ViewFreshedEvent(this, "插入了子视图："+view.toString());
+		this.fresh_SetFresh(true);
+		I_UIExEvent e = new ViewRefreshRequest(this, "插入了子视图："+view.toString());
 		this.event_DispatchUIEvent(e);
 	}
 	
@@ -157,8 +167,8 @@ public abstract class WView implements I_View {
 	public void view_RemoveViewAtIndex(I_View view) {
 		if(this.children.contains(view))
 			this.children.remove(view);
-		this.bool_SetFresh(true);
-		I_UIExEvent e = new ViewFreshedEvent(this, "删除了子视图:"+view.toString());
+		this.fresh_SetFresh(true);
+		I_UIExEvent e = new ViewRefreshRequest(this, "删除了子视图:"+view.toString());
 		this.event_DispatchUIEvent(e);
 	}
 	
@@ -173,15 +183,17 @@ public abstract class WView implements I_View {
 	}
 	
 	@Override
-	public I_GraphicsPort getGraphicsPort() {
+	public I_GraphicsPort gport_getGraphicsPort() {
 		return this.port;
 	}
 	
 	
 	@Override
 	public void operate_RePaint() {
+		this.fresh_SetFresh(true);
 		//绘制组件自身
-		this.__paintItSelf(this.port);
+		I_UIExEvent e = new ViewRefreshRequest(this, "调用了Repaint方法,请求整体重绘");
+		this.event_DispatchUIEvent(e);
 	}
 	
 	@Override
@@ -197,5 +209,14 @@ public abstract class WView implements I_View {
 	@Override
 	public void event_DispatchUIEvent(I_UIExEvent e) {
 		this.__view_GetParentView().event_DispatchUIEvent(e);
+	}
+	
+
+	@Override
+	public Area clip_getClipShape(Area childView) {
+		Area thisShape = new Area(new Rectangle((int)this.visibleSize.getWidth(), (int)this.visibleSize.getHeight()));
+		thisShape.intersect(childView);
+		
+		return this.__view_GetParentView().clip_getClipShape(thisShape);
 	}
 }
