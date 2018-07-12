@@ -2,7 +2,7 @@ package ws.exui.binding;
 
 import java.util.ArrayList;
 
-import ws.exui.event.BindingValueChangeReport;
+import ws.exui.event.ValueChangeReport;
 import ws.exui.event.I_ValueChangeReport;
 
 public class ExString implements I_ValueChangeListener,I_ValueCommon{
@@ -38,7 +38,7 @@ public class ExString implements I_ValueChangeListener,I_ValueCommon{
 	
 	public void setValue(String s) {
 		this.val = s;
-		I_ValueChangeReport report = new BindingValueChangeReport(this, this.hashCode()+"赋值："+this.val);
+		I_ValueChangeReport report = new ValueChangeReport(this, this.hashCode()+"赋值："+this.val);
 		this.__invokeAll(report);
 	}
 	
