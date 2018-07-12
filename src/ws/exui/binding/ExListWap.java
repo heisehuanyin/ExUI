@@ -109,5 +109,15 @@ public class ExListWap<E> implements I_ListCommon<E>{
 		this.trueList.clear();
 	}
 	
+	@Override
+	public String toString() {
+		String val = this.getClass().getName() + "[num=" + this.getChildCount() + "::" ;
+		for(int i=0;i<this.getChildCount();++i) {
+			E vi = this.getChildAtIndex(i);
+			val += "v_" + i + "=" + vi.toString() + "," ;
+		}
+		return val +"]";
+	}
+	
 
 }
