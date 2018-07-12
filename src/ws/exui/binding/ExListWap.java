@@ -6,7 +6,7 @@ import java.util.List;
 import ws.exui.event.DataEventReport;
 import ws.exui.event.I_DataEventReport;
 
-public class ExListWap<E> implements I_ListChangeListener,I_ListCommon<E>{
+public class ExListWap<E> implements I_ListCommon<E>{
 	private ArrayList<I_ListChangeListener> l_list = new ArrayList<>();
 	private ArrayList<E> trueList = new ArrayList<E>();
 

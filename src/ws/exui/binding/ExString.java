@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ws.exui.event.DataEventReport;
 import ws.exui.event.I_DataEventReport;
 
-public class ExString implements I_ValueChangeListener,I_ValueCommon{
+public class ExString implements I_ValueCommon{
 	private ArrayList<I_ValueChangeListener> l_list = new ArrayList<>();
 	private String val = "";
 

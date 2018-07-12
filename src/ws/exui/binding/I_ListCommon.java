@@ -1,6 +1,6 @@
 package ws.exui.binding;
 
-public interface I_ListCommon<E> {
+public interface I_ListCommon<E> extends I_ListChangeListener{
 	/**
 	 * 添加Listener
 	 * @param l Listener*/
