@@ -18,6 +18,7 @@ import ws.exui.uibase.I_GraphicsPort;
 import ws.exui.uibase.I_Size;
 import ws.exui.uibase.WPoint;
 import ws.exui.uibase.WSize;
+import ws.exui.uiview.ExSplitPane;
 import ws.exui.uiview.I_View;
 
 public class ExWindow extends ExSplitPane implements I_Window {

@@ -5,8 +5,8 @@ import java.awt.Color;
 import ws.exui.event.I_ExEvent;
 import ws.exui.uibase.WMargin;
 import ws.exui.uibase.WSize;
+import ws.exui.uiview.ExSplitPane;
 import ws.exui.uiview.I_View;
-import ws.exui.uiwin.ExSplitPane;
 import ws.exui.uiwin.ExWindow;
 import ws.exui.uiwin.I_Window;
 

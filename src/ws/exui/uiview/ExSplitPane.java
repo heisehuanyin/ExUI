@@ -1,8 +1,5 @@
-package ws.exui.uiwin;
+package ws.exui.uiview;
 
-import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
 import ws.exui.uibase.I_GraphicsPort;
@@ -10,8 +7,6 @@ import ws.exui.uibase.I_Point;
 import ws.exui.uibase.I_Size;
 import ws.exui.uibase.WPoint;
 import ws.exui.uibase.WSize;
-import ws.exui.uiview.I_View;
-import ws.exui.uiview.WView;
 
 public class ExSplitPane extends WView {
 	public final static int HORIZONTAL = 0;
