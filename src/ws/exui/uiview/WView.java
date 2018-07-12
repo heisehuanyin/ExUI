@@ -47,7 +47,7 @@ public abstract class WView implements I_View {
 	@Override
 	public void adjust_SetAutoAdjust(boolean width, boolean height) {
 		this.width_auto = width;
-		this.width_auto = height;
+		this.height_auto = height;
 		this.fresh_SetFresh(true);
 		
 		I_UIExEvent e = new ViewRefreshRequest(this, "设置了自适应");
@@ -94,8 +94,21 @@ public abstract class WView implements I_View {
 		return tf;
 	}
 
+	@Override
 	public void size_SetBasicSize(I_Size bSize) {
 		this.basicSize = bSize;
+		if(!this.adjust_IsAutoWidth()) {
+			this.visibleSize = new WSize(bSize.getWidth(), this.visibleSize.getHeight());
+		}
+		if(!this.adjust_IsAutoHeight()) {
+			this.visibleSize = new WSize(this.visibleSize.getHeight(), bSize.getHeight());
+		}
+
+		System.out.println(this.toString() + "设置基础尺寸："+ bSize.toString());
+		
+		I_UIExEvent e = new ViewRefreshRequest(this, "basicSize更新");
+		this.fresh_SetFresh(true);
+		this.event_DispatchUIEvent(e);
 	}
 	
 	@Override
@@ -107,15 +120,18 @@ public abstract class WView implements I_View {
 	public void size_SetVisibleSize(I_Size vSize) {
 		if(vSize.getWidth() > this.basicSize.getWidth() ||
 				vSize.getHeight() > this.basicSize.getHeight()) {
-			if(vSize.getWidth() < this.basicSize.getWidth()) {
+			if(this.adjust_IsAutoWidth() && vSize.getWidth() > this.basicSize.getWidth()) {}
+			else {
 				vSize = new WSize(this.basicSize.getWidth(), vSize.getHeight());
 			}
 			
-			if(vSize.getHeight() < this.basicSize.getHeight()) {
+			if(this.adjust_IsAutoHeight() && vSize.getHeight() > this.basicSize.getHeight()) {}
+			else {
 				vSize = new WSize(vSize.getWidth(), this.basicSize.getHeight());
 			}
 			
 			this.visibleSize = vSize;
+			System.out.println(this.toString() + "设置可视尺寸："+ vSize.toString());
 			this.fresh_SetFresh(true);
 			this.__operate_ResizeSubviewSize();
 			

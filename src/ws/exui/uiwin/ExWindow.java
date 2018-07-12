@@ -202,10 +202,8 @@ class CustomWindow extends Frame implements WindowListener, ComponentListener{
 	@Override
 	public void componentResized(ComponentEvent e) {
 		I_Size vSize = new WSize(this.getWidth() -this.getInsets().left -this.getInsets().right,
-				this.getHeight() - this.getInsets().top - this.getInsets().bottom + 6);
-		if(vSize.getWidth() < this.f.size_GetBasicSize().getWidth()) {
-		}
-		if(vSize.getHeight() < this.f.size_GetBasicSize().getHeight()) {}
+				this.getHeight() - this.getInsets().top - this.getInsets().bottom);
+		
 		f.size_SetVisibleSize(vSize);
 	}
 

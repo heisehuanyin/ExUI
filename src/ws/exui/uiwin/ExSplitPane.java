@@ -58,8 +58,8 @@ public class ExSplitPane extends WView {
 						one.margin_GetMargin().getBottomSpace());
 				one.size_SetVisibleSize(sizev);
 				
-				I_Point point = new WPoint(offSet + one.margin_GetMargin().getLeftSpace(),
-						one.margin_GetMargin().getTopSpace());
+				offSet += one.margin_GetMargin().getLeftSpace();
+				I_Point point = new WPoint(offSet ,one.margin_GetMargin().getTopSpace());
 				one.point_SetOriginPoint(point);
 				offSet += one.size_GetVisibleSize().getWidth() + one.margin_GetMargin().getRightSpace();
 			}
@@ -90,9 +90,9 @@ public class ExSplitPane extends WView {
 						one.size_GetVisibleSize().getHeight());
 				
 				one.size_SetVisibleSize(sizel);
-				I_Point point = new WPoint(one.margin_GetMargin().getLeftSpace(),
-						offSet + one.margin_GetMargin().getTopSpace());
 				
+				offSet += one.margin_GetMargin().getTopSpace();
+				I_Point point = new WPoint(one.margin_GetMargin().getLeftSpace(), offSet);
 				one.point_SetOriginPoint(point);
 				offSet += one.size_GetVisibleSize().getHeight() + one.margin_GetMargin().getBottomSpace();
 			}

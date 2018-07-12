@@ -43,18 +43,31 @@ public class ExManager implements Runnable{
 		//添加子视图
 		I_View v_one = new ExSplitPane(ExSplitPane.HORIZONTAL);
 		exw.view_InsertViewAtIndex(v_one, exw.view_GetChildCount());
+		v_one.color_SetColor(Color.LIGHT_GRAY);
+		v_one.size_SetBasicSize(new WSize(20,20));
+		v_one.adjust_SetAutoAdjust(true, false);
+		
+		v_one = new ExSplitPane(ExSplitPane.HORIZONTAL);
+		exw.view_InsertViewAtIndex(v_one, exw.view_GetChildCount());
 		v_one.color_SetColor(Color.blue);
-		v_one.margin_SetMargin(new WMargin(2,2,2,2));
+		v_one.margin_SetMargin(new WMargin(2,2,2,0));
+		
+		for(int i=0;i<8;++i) {
+			I_View x = new ExSplitPane(ExSplitPane.HORIZONTAL);
+			v_one.view_InsertViewAtIndex(x, v_one.view_GetChildCount());
+			x.margin_SetMargin(new WMargin(2,2,2,2));
+			x.color_SetColor(new Color(200,100, 30 * i));
+		}
 		
 		v_one = new ExSplitPane(ExSplitPane.HORIZONTAL);
 		exw.view_InsertViewAtIndex(v_one, exw.view_GetChildCount());
 		v_one.color_SetColor(Color.green);
-		v_one.margin_SetMargin(new WMargin(2,2,2,2));
+		v_one.margin_SetMargin(new WMargin(2,2,2,0));
 		
 		v_one = new ExSplitPane(ExSplitPane.HORIZONTAL);
 		exw.view_InsertViewAtIndex(v_one, exw.view_GetChildCount());
 		v_one.color_SetColor(Color.orange);
-		v_one.margin_SetMargin(new WMargin(2,2,2,2));
+		v_one.margin_SetMargin(new WMargin(2,2,2,0));
 		
 		v_one = new ExSplitPane(ExSplitPane.HORIZONTAL);
 		exw.view_InsertViewAtIndex(v_one, exw.view_GetChildCount());

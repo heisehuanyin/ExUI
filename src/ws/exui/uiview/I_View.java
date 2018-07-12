@@ -153,4 +153,9 @@ public interface I_View {
 
 	void __paintItSelf(I_GraphicsPort port);
 
+	/**
+	 * 设置基本尺寸
+	 * @param bSize 基础尺寸*/
+	void size_SetBasicSize(I_Size bSize);
+
 }
