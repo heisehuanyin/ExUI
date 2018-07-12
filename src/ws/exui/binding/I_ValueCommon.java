@@ -1,6 +1,6 @@
 package ws.exui.binding;
 
-public interface I_BindingObject {
+public interface I_ValueCommon {
 	/**
 	 * 添加Listener
 	 * @param l Listener*/

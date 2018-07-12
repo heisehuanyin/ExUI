@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ws.exui.event.BindingValueChangeReport;
 import ws.exui.event.I_ValueChangeReport;
 
-public class ExDouble implements I_ValueChangeListener, I_BindingObject {
+public class ExDouble implements I_ValueChangeListener, I_ValueCommon {
 	private ArrayList<I_ValueChangeListener> l_list = new ArrayList<>();
 	private double val = 0;
 
