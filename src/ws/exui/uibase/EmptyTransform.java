@@ -5,9 +5,8 @@ import java.awt.geom.AffineTransform;
 public class EmptyTransform implements I_Transform {
 
 	@Override
-	public AffineTransform getAffineTransform() {
-		// TODO Auto-generated method stub
-		return new AffineTransform();
+	public void setTransformInner(AffineTransform trans) {
+		//不做任何事情
 	}
 
 }

@@ -37,26 +37,37 @@ public class WGraphicsPort implements I_GraphicsPort {
 		this.view.__view_GetParentView().gport_getGraphicsPort().fillShape(sSymbo, c);
 	}
 	
+	/**
+	 * 将本视图中的图形坐标转换为父视图坐标，相对位置不变。
+	 * @param s 图形
+	 * @return 父视图中的图形*/
 	private Area shape_Convert(Shape s) {
 		Area sSymbo = new Area(s);
-		I_Size size = this.view.size_GetVisibleSize();
-		Area clip = new Area(new Rectangle((int)size.getWidth(), (int)size.getHeight()));
+		Area clip = this.view.clip_getClipShape();
 		
 		//获取在裁切区域内部的真实图形
 		sSymbo.intersect(clip);
 		
 		//获取转换方式--父坐标中的图形转换为子坐标的图形
-		I_Transform ft = this.view.transform_GetTransform();
-		//将字坐标图形变为父坐标图形，传递给父视图绘制
-		sSymbo.transform(ft.getAffineTransform());
+		//将字坐标图形变为父坐标图形，以便传递给父视图绘制
+		sSymbo.transform(this.view.transform_GetTransformInner());
 		
 		return sSymbo;
 	}
 
 	@Override
-	public void drawString(String s, I_Point point, Font format) {
-		// TODO Auto-generated method stub
+	public void drawString(String s, I_Point point, Font format, Area clipShape) {
+		//如果没有设定clip，则默认组件的全部可视区域
+		if(clipShape == null) {
+			clipShape = this.view.clip_getClipShape();
+		}
+		//转换为父视图中的图形
+		clipShape = this.shape_Convert(clipShape);
+		Area spoint = new Area(new Rectangle((int)point.getX(), (int)point.getY(),2,2));
+		spoint = this.shape_Convert(spoint);
+		point = new WPoint(spoint.getBounds().getX(), spoint.getBounds().getY());
 		
+		this.view.__view_GetParentView().gport_getGraphicsPort().drawString(s, point, format, clipShape);
 	}
 	
 }

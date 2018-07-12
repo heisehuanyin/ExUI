@@ -3,6 +3,7 @@ package ws.exui.uibase;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
+import java.awt.geom.Area;
 
 public interface I_GraphicsPort {
 
@@ -29,7 +30,8 @@ public interface I_GraphicsPort {
 	 * @param s 内容
 	 * @param point 坐标位置
 	 * @param format 格式
+	 * @param clipShape 可视区域
 	 * */
-	void drawString(String s, I_Point point, Font format);
+	void drawString(String s, I_Point point, Font format, Area clipShape);
 	
 }

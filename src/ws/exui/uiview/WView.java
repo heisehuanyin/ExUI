@@ -2,7 +2,7 @@ package ws.exui.uiview;
 
 import java.awt.Color;
 import java.awt.Rectangle;
-import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
@@ -49,6 +49,7 @@ public abstract class WView implements I_View {
 		this.width_auto = width;
 		this.width_auto = height;
 		this.fresh_SetFresh(true);
+		
 		I_UIExEvent e = new ViewRefreshRequest(this, "设置了自适应");
 		this.event_DispatchUIEvent(e);
 	}
@@ -63,6 +64,7 @@ public abstract class WView implements I_View {
 		if(c != null) {
 			this.c = c;
 			this.fresh_SetFresh(true);
+			
 			I_UIExEvent e = new ViewRefreshRequest(this, "设置了Color："+c.toString());
 			this.event_DispatchUIEvent(e);
 		}
@@ -78,13 +80,18 @@ public abstract class WView implements I_View {
 		if(trans != null) {
 			this.trans = trans;
 			this.fresh_SetFresh(true);
+			
 			I_UIExEvent e = new ViewRefreshRequest(this, "设置了转换器："+trans.toString());
 			this.event_DispatchUIEvent(e);
 		}
 	}
 	@Override
-	public I_Transform transform_GetTransform() {
-		return null;
+	public AffineTransform transform_GetTransformInner() {
+		AffineTransform tf = new AffineTransform();
+		tf.translate(origin.getX(), origin.getY());
+		this.trans.setTransformInner(tf);
+		
+		return tf;
 	}
 
 	public void size_SetBasicSize(I_Size bSize) {
@@ -118,6 +125,7 @@ public abstract class WView implements I_View {
 		if(nMargin != null) {
 			this.margin = nMargin;
 			this.fresh_SetFresh(true);
+			
 			I_UIExEvent e = new ViewRefreshRequest(this, "重设了视图边距："+nMargin.toString());
 			this.event_DispatchUIEvent(e);
 		}
@@ -133,6 +141,7 @@ public abstract class WView implements I_View {
 		if(origin != null) {
 			this.origin = origin;
 			this.fresh_SetFresh(true);
+			
 			I_UIExEvent e = new ViewRefreshRequest(this, "重置了原点："+origin.toString());
 			this.event_DispatchUIEvent(e);
 		}
@@ -149,6 +158,7 @@ public abstract class WView implements I_View {
 		view.__view_SetParentView(this);
 		this.children.add(index, view);
 		this.fresh_SetFresh(true);
+		
 		I_UIExEvent e = new ViewRefreshRequest(this, "插入了子视图："+view.toString());
 		this.event_DispatchUIEvent(e);
 	}
@@ -168,6 +178,7 @@ public abstract class WView implements I_View {
 		if(this.children.contains(view))
 			this.children.remove(view);
 		this.fresh_SetFresh(true);
+		
 		I_UIExEvent e = new ViewRefreshRequest(this, "删除了子视图:"+view.toString());
 		this.event_DispatchUIEvent(e);
 	}
@@ -191,6 +202,7 @@ public abstract class WView implements I_View {
 	@Override
 	public void operate_RePaint() {
 		this.fresh_SetFresh(true);
+		
 		//绘制组件自身
 		I_UIExEvent e = new ViewRefreshRequest(this, "调用了Repaint方法,请求整体重绘");
 		this.event_DispatchUIEvent(e);
@@ -202,7 +214,7 @@ public abstract class WView implements I_View {
 	/**
 	 * 绘制组件自身，传入的绘图端口是通过rePaint函数配置好的实例
 	 * @param port 配置完成的端口*/
-	protected abstract void __paintItSelf(I_GraphicsPort port);
+	public abstract void __paintItSelf(I_GraphicsPort port);
 	
 	/**
 	 * 派送UI事件*/
@@ -213,10 +225,10 @@ public abstract class WView implements I_View {
 	
 
 	@Override
-	public Area clip_getClipShape(Area childView) {
-		Area thisShape = new Area(new Rectangle((int)this.visibleSize.getWidth(), (int)this.visibleSize.getHeight()));
-		thisShape.intersect(childView);
+	public Area clip_getClipShape() {
+		Area thisShape = new Area(new Rectangle(
+				(int)this.visibleSize.getWidth(), (int)this.visibleSize.getHeight()));
 		
-		return this.__view_GetParentView().clip_getClipShape(thisShape);
+		return thisShape;
 	}
 }

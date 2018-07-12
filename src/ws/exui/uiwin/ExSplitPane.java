@@ -1,5 +1,7 @@
 package ws.exui.uiwin;
 
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.Shape;
 
 import ws.exui.uibase.I_GraphicsPort;
@@ -97,7 +99,12 @@ public class ExSplitPane extends WView {
 	}
 
 	@Override
-	protected void __paintItSelf(I_GraphicsPort port) {
+	public void __paintItSelf(I_GraphicsPort port) {
+		Rectangle varea = new Rectangle(0, 0,
+				(int)this.size_GetVisibleSize().getWidth(), (int)this.size_GetVisibleSize().getHeight());
+		
+		port.fillShape(varea, Color.LIGHT_GRAY);
+		
 	}
 
 

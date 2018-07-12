@@ -2,6 +2,7 @@ package ws.exui.uiview;
 
 import java.awt.Color;
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 
 import ws.exui.event.I_UIExEvent;
@@ -72,10 +73,6 @@ public interface I_View {
 	void view_RemoveViewAtIndex(I_View view);
 
 	/**
-	 * 重设子视图尺寸，此方法为内部方法，不建议外部调用*/
-	void __operate_ResizeSubviewSize();
-
-	/**
 	 * 设置坐标变换单元，在利用绘图端口进行绘图的时候，会自动调用变换单元进行坐标变换
 	 * @param trans 变换单元*/
 	void transform_SetTransform(I_Transform trans);
@@ -83,19 +80,9 @@ public interface I_View {
 	/**
 	 * 获取Transform单元
 	 * @return 本单元的Transform*/
-	I_Transform transform_GetTransform();
+	AffineTransform transform_GetTransformInner();
 	
 	
-	/**
-	 * 获取次视图的父视图
-	 * @return 父视图实例*/
-	I_View __view_GetParentView();
-
-	/**
-	 * 内部函数，设置父视图
-	 * @param wView 父视图*/
-	void __view_SetParentView(WView wView);
-
 	/**
 	 * 获取父视图的图形绘制端口，用于递归绘制子视图
 	 * @return 返回的父视图接口*/
@@ -133,7 +120,7 @@ public interface I_View {
 
 	/**
 	 * 重置View状态为新鲜
-	 * @param isfresh TODO*/
+	 * @param isfresh 新鲜标志*/
 	void fresh_SetFresh(boolean isfresh);
 	/**
 	 * 测试状态是否新鲜
@@ -145,8 +132,23 @@ public interface I_View {
 	void event_DispatchUIEvent(I_UIExEvent e);
 
 	/**
-	 * 获取clip图形，此图形用于设置clip区域，不对View内部填充图形进行处理，此函数将传入的图形与本视图可视区域结合进行处理，传出子视图可视图形
-	 * @param shape 传入的图形
+	 * 获取clip图形
 	 * @return 层层处理获取到的可见图形区域*/
-	Area clip_getClipShape(Area shape);
+	Area clip_getClipShape();
+	
+	
+	/**
+	 * 重设子视图尺寸，此方法为内部方法，不建议外部调用*/
+	void __operate_ResizeSubviewSize();
+
+	/**
+	 * 获取次视图的父视图
+	 * @return 父视图实例*/
+	I_View __view_GetParentView();
+
+	/**
+	 * 内部函数，设置父视图
+	 * @param wView 父视图*/
+	void __view_SetParentView(WView wView);
+
 }
