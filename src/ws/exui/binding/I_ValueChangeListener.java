@@ -1,10 +1,10 @@
 package ws.exui.binding;
 
-import ws.exui.event.I_ValueChangeReport;
+import ws.exui.event.I_DataEventReport;
 
 public interface I_ValueChangeListener {
 	/**
 	 * 自动调用接口
 	 * @param e 事件报告*/
-	void valueChanged(I_ValueChangeReport e);
+	void valueChanged(I_DataEventReport e);
 }

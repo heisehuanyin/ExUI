@@ -1,6 +1,6 @@
 package ws.exui.event;
 
-public interface I_ValueChangeReport extends I_ExEvent {
+public interface I_DataEventReport extends I_ExEvent {
 
 	/**
 	 * 记录下该事件至今调用的对象

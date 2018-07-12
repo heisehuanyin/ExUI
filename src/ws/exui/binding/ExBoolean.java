@@ -2,8 +2,8 @@ package ws.exui.binding;
 
 import java.util.ArrayList;
 
-import ws.exui.event.ValueChangeReport;
-import ws.exui.event.I_ValueChangeReport;
+import ws.exui.event.DataEventReport;
+import ws.exui.event.I_DataEventReport;
 
 public class ExBoolean implements I_ValueChangeListener,I_ValueCommon{
 	private ArrayList<I_ValueChangeListener> l_list = new ArrayList<>();
@@ -21,7 +21,7 @@ public class ExBoolean implements I_ValueChangeListener,I_ValueCommon{
 	}
 	
 	
-	private void __invokeAll(I_ValueChangeReport report) {
+	private void __invokeAll(I_DataEventReport report) {
 		report.addInvokePath(this);
 		for(I_ValueChangeListener l:l_list) {
 			l.valueChanged(report);
@@ -29,7 +29,7 @@ public class ExBoolean implements I_ValueChangeListener,I_ValueCommon{
 	}
 	
 	@Override
-	public void valueChanged(I_ValueChangeReport e) {
+	public void valueChanged(I_DataEventReport e) {
 		if(e.isPathContains(this))
 			return;
 		
@@ -39,7 +39,7 @@ public class ExBoolean implements I_ValueChangeListener,I_ValueCommon{
 
 	public void setValue(boolean v) {
 		this.val = v;
-		I_ValueChangeReport report = new ValueChangeReport(this, this.hashCode() + "赋值:" + this.val);
+		I_DataEventReport report = new DataEventReport(this, this.hashCode() + "赋值:" + this.val);
 		this.__invokeAll(report);
 	}
 	

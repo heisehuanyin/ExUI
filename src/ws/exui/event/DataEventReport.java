@@ -2,12 +2,12 @@ package ws.exui.event;
 
 import java.util.ArrayList;
 
-public class ValueChangeReport implements I_ValueChangeReport{
+public class DataEventReport implements I_DataEventReport{
 	private Object source = null;
 	private String msg = "valueChange";
 	private ArrayList<String> invokeList = new ArrayList<>();
 	
-	public ValueChangeReport(Object source, String msg) {
+	public DataEventReport(Object source, String msg) {
 		this.source = source;
 		this.msg = msg;
 	}

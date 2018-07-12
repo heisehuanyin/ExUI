@@ -2,12 +2,13 @@ package ws.exui.binding;
 
 import java.util.ArrayList;
 
-import ws.exui.event.I_ValueChangeReport;
+import ws.exui.event.I_DataEventReport;
 
-public class ExList<E> extends ArrayList<E> implements I_ValueChangeListener{
+public class ExList<E> implements I_ValueChangeListener{
+	
 
 	@Override
-	public void valueChanged(I_ValueChangeReport e) {
+	public void valueChanged(I_DataEventReport e) {
 		// TODO Auto-generated method stub
 		
 	}
