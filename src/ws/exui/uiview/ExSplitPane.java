@@ -8,7 +8,7 @@ import ws.exui.uibase.I_Size;
 import ws.exui.uibase.WPoint;
 import ws.exui.uibase.WSize;
 
-public class ExSplitPane extends WView {
+public class ExSplitPane extends ExView {
 	public final static int HORIZONTAL = 0;
 	public final static int VERTICAL = 1;
 	

@@ -149,7 +149,7 @@ public interface I_View {
 	/**
 	 * 内部函数，设置父视图
 	 * @param wView 父视图*/
-	void __view_SetParentView(WView wView);
+	void __view_SetParentView(I_View wView);
 
 	void __paintItSelf(I_GraphicsPort port);
 

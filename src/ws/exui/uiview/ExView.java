@@ -19,7 +19,7 @@ import ws.exui.uibase.WMargin;
 import ws.exui.uibase.WPoint;
 import ws.exui.uibase.WSize;
 
-public abstract class WView implements I_View {
+public abstract class ExView implements I_View {
 	private I_Size basicSize = new WSize(0, 0);
 	private I_Size visibleSize = new WSize(0, 0);
 	private I_Point origin = new WPoint(0, 0);
@@ -33,7 +33,7 @@ public abstract class WView implements I_View {
 	private Color c = Color.white;
 	private I_Transform trans = new WEmptyTransform();
 
-	public WView() {}
+	public ExView() {}
 	
 	@Override
 	public void fresh_SetFresh(boolean isfresh) {
@@ -209,7 +209,7 @@ public abstract class WView implements I_View {
 	}
 	
 	@Override
-	public void __view_SetParentView(WView wView) {
+	public void __view_SetParentView(I_View wView) {
 		this.parent = wView;
 	}
 
