@@ -26,4 +26,11 @@ public class ExBindingBridge {
 		front.autoPush();
 	}
 	
+	public void Binding(I_Object4BindingCommon front, I_Object4BindingCommon end) {
+		front.getChildren().addChangeListener(end.getChildren());
+		if(this.bridgeType == ExBindingBridge.POINT_2_POINT) {
+			end.getChildren().addChangeListener(front.getChildren());
+		}
+	}
+	
 }
