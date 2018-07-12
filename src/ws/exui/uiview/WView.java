@@ -1,9 +1,9 @@
 package ws.exui.uiview;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import ws.exui.event.I_UIExEvent;
@@ -105,10 +105,19 @@ public abstract class WView implements I_View {
 
 	@Override
 	public void size_SetVisibleSize(I_Size vSize) {
-		if(vSize.getWidth() > this.visibleSize.getWidth() &&
-				vSize.getHeight() > this.visibleSize.getHeight()) {
+		if(vSize.getWidth() > this.basicSize.getWidth() ||
+				vSize.getHeight() > this.basicSize.getHeight()) {
+			if(vSize.getWidth() < this.basicSize.getWidth()) {
+				vSize = new WSize(this.basicSize.getWidth(), vSize.getHeight());
+			}
+			
+			if(vSize.getHeight() < this.basicSize.getHeight()) {
+				vSize = new WSize(vSize.getWidth(), this.basicSize.getHeight());
+			}
+			
 			this.visibleSize = vSize;
 			this.fresh_SetFresh(true);
+			this.__operate_ResizeSubviewSize();
 			
 			I_UIExEvent e = new ViewRefreshRequest(this, "重置了视图尺寸："+vSize.toString());
 			this.event_DispatchUIEvent(e);
@@ -214,6 +223,7 @@ public abstract class WView implements I_View {
 	/**
 	 * 绘制组件自身，传入的绘图端口是通过rePaint函数配置好的实例
 	 * @param port 配置完成的端口*/
+	@Override
 	public abstract void __paintItSelf(I_GraphicsPort port);
 	
 	/**
@@ -226,8 +236,8 @@ public abstract class WView implements I_View {
 
 	@Override
 	public Area clip_getClipShape() {
-		Area thisShape = new Area(new Rectangle(
-				(int)this.visibleSize.getWidth(), (int)this.visibleSize.getHeight()));
+		Area thisShape = new Area(new Rectangle2D.Double(0, 0,
+				this.visibleSize.getWidth(), this.visibleSize.getHeight()));
 		
 		return thisShape;
 	}

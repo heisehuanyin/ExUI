@@ -151,4 +151,6 @@ public interface I_View {
 	 * @param wView 父视图*/
 	void __view_SetParentView(WView wView);
 
+	void __paintItSelf(I_GraphicsPort port);
+
 }
