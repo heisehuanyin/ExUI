@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import ws.exui.event.I_UIExEvent;
 import ws.exui.event.ViewRefreshRequest;
-import ws.exui.uibase.EmptyTransform;
+import ws.exui.uibase.WEmptyTransform;
 import ws.exui.uibase.I_GraphicsPort;
 import ws.exui.uibase.I_Margin;
 import ws.exui.uibase.I_Point;
@@ -31,7 +31,7 @@ public abstract class WView implements I_View {
 	private boolean height_auto = true;
 	private boolean isFresh = true;
 	private Color c = Color.white;
-	private I_Transform trans = new EmptyTransform();
+	private I_Transform trans = new WEmptyTransform();
 
 	public WView() {}
 	

@@ -9,11 +9,11 @@ import java.awt.geom.Area;
 
 import ws.exui.uiview.I_View;
 
-public class BridgeGraphicsPort implements I_GraphicsPort {
+public class WBridgeGraphicsPort implements I_GraphicsPort {
 	private Frame wframe = null;
 	private I_View win;
 	
-	public BridgeGraphicsPort(I_View win, Frame twin) {
+	public WBridgeGraphicsPort(I_View win, Frame twin) {
 		this.wframe = twin;
 		this.win = win;
 	}

@@ -13,7 +13,7 @@ import java.awt.geom.Rectangle2D;
 
 import ws.exui.ExManager;
 import ws.exui.event.I_UIExEvent;
-import ws.exui.uibase.BridgeGraphicsPort;
+import ws.exui.uibase.WBridgeGraphicsPort;
 import ws.exui.uibase.I_GraphicsPort;
 import ws.exui.uibase.I_Size;
 import ws.exui.uibase.WPoint;
@@ -37,7 +37,7 @@ public class ExWindow extends ExSplitPane implements I_Window {
 		this.window.setTitle(string);
 		this.window.setSize((int)basicOutline.getWidth(), (int)basicOutline.getHeight());
 		this.window.pack();
-		this.gport = new BridgeGraphicsPort(this, window);
+		this.gport = new WBridgeGraphicsPort(this, window);
 		
 		I_Size vSize = new WSize(basicOutline.getWidth() -window.getInsets().left -window.getInsets().right,
 				basicOutline.getHeight() -window.getInsets().top -window.getInsets().bottom);
