@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import ws.exui.event.BindingValueChangeReport;
 import ws.exui.event.I_ValueChangeReport;
 
-public class ExDouble implements I_ValueChangeListener, I_BindingObject {
+public class ExString implements I_ValueChangeListener,I_BindingObject{
 	private ArrayList<I_ValueChangeListener> l_list = new ArrayList<>();
-	private double val = 0;
+	private String val = "";
 
 	@Override
 	public void addChangeListener(I_ValueChangeListener l) {
@@ -32,16 +32,17 @@ public class ExDouble implements I_ValueChangeListener, I_BindingObject {
 		if(e.isPathContains(this))
 			return;
 		
-		this.val = ((ExDouble)e.getSource()).getValue();
+		this.val = ((ExString)e.getSource()).getValue();
 		this.__invokeAll(e);
 	}
 	
-	public void setValue(Double d) {
-		this.val = d;
+	public void setValue(String s) {
+		this.val = s;
 		I_ValueChangeReport report = new BindingValueChangeReport(this, this.hashCode()+"赋值："+this.val);
 		this.__invokeAll(report);
 	}
-	public double getValue() {
+	
+	public String getValue() {
 		return this.val;
 	}
 

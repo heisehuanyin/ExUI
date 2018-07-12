@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import ws.exui.event.BindingValueChangeReport;
 import ws.exui.event.I_ValueChangeReport;
 
-public class ExDouble implements I_ValueChangeListener, I_BindingObject {
+public class ExBoolean implements I_ValueChangeListener,I_BindingObject{
 	private ArrayList<I_ValueChangeListener> l_list = new ArrayList<>();
-	private double val = 0;
+	private boolean val = false;
 
 	@Override
 	public void addChangeListener(I_ValueChangeListener l) {
@@ -19,6 +19,7 @@ public class ExDouble implements I_ValueChangeListener, I_BindingObject {
 		if(this.l_list.contains(l))
 			this.l_list.remove(l);
 	}
+	
 	
 	private void __invokeAll(I_ValueChangeReport report) {
 		report.addInvokePath(this);
@@ -32,16 +33,17 @@ public class ExDouble implements I_ValueChangeListener, I_BindingObject {
 		if(e.isPathContains(this))
 			return;
 		
-		this.val = ((ExDouble)e.getSource()).getValue();
+		this.val = ((ExBoolean)e.getSource()).getValue();
 		this.__invokeAll(e);
 	}
-	
-	public void setValue(Double d) {
-		this.val = d;
-		I_ValueChangeReport report = new BindingValueChangeReport(this, this.hashCode()+"赋值："+this.val);
+
+	public void setValue(boolean v) {
+		this.val = v;
+		I_ValueChangeReport report = new BindingValueChangeReport(this, this.hashCode() + "赋值:" + this.val);
 		this.__invokeAll(report);
 	}
-	public double getValue() {
+	
+	public boolean getValue() {
 		return this.val;
 	}
 
