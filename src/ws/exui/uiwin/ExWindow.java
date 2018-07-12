@@ -1,5 +1,6 @@
 package ws.exui.uiwin;
 
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -30,7 +31,7 @@ public class ExWindow extends ExSplitPane implements I_Window {
 		this.ctl = ctl;
 		if(miniSize != null)
 			this.basicOutline = miniSize;
-		
+		this.window.setMinimumSize(new Dimension((int)this.basicOutline.getWidth(), (int)this.basicOutline.getHeight()));
 		
 		this.window.setTitle(string);
 		this.window.setSize((int)basicOutline.getWidth(), (int)basicOutline.getHeight());

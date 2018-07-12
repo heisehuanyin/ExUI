@@ -58,6 +58,7 @@ public class ExManager implements Runnable{
 		
 		v_one = new ExSplitPane(ExSplitPane.HORIZONTAL);
 		exw.view_InsertViewAtIndex(v_one, exw.view_GetChildCount());
+		v_one.color_SetColor(Color.CYAN);
 		v_one.margin_SetMargin(new WMargin(2,2,2,2));
 		
 

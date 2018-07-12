@@ -104,7 +104,7 @@ public class ExSplitPane extends WView {
 		Rectangle2D.Double varea = new Rectangle2D.Double(0, 0,
 				this.size_GetVisibleSize().getWidth(), this.size_GetVisibleSize().getHeight());
 		
-		port.fillShape(varea, Color.LIGHT_GRAY);
+		port.fillShape(varea, null);
 		
 	}
 
