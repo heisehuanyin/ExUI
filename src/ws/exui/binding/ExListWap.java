@@ -8,7 +8,7 @@ import ws.exui.event.ElementEventReport;
 import ws.exui.event.I_DataEventReport;
 import ws.exui.event.I_ElementEventReport;
 
-public class ExListWap<E> implements I_ListCommon<E>{
+public abstract class ExListWap<E> implements I_ListCommon<E>{
 	private ArrayList<I_ListChangeListener> l_list = new ArrayList<>();
 	private ArrayList<E> trueList = new ArrayList<E>();
 
@@ -24,13 +24,13 @@ public class ExListWap<E> implements I_ListCommon<E>{
 			this.l_list.remove(l);
 	}
 	
-	private void __invokeAll_Remove(I_ElementEventReport report) {
+	private void __invokeAll_Remove(I_ElementEventReport<Integer, ?> report) {
 		report.addInvokePath(this);
 		for(I_ListChangeListener l:l_list) {
 			l.targetRemove(report);
 		}
 	}
-	private void __invokeAll_Insert(I_ElementEventReport report) {
+	private void __invokeAll_Insert(I_ElementEventReport<Integer, ?> report) {
 		report.addInvokePath(this);
 		for(I_ListChangeListener l:l_list) {
 			l.targetInsert(report);
@@ -52,11 +52,13 @@ public class ExListWap<E> implements I_ListCommon<E>{
 	public void removeChild(E x) {
 		if(!this.trueList.contains(x))
 			return;
+		int index = this.trueList.indexOf(x);
 		this.trueList.remove(x);
 
 		I_ElementEventReport<Integer,E> report = new ElementEventReport<>(this, 
-				this.hashCode()+ "remove:obj="+ x.hashCode());
+				this.hashCode()+ "remove:position="+ index+ ",obj="+ x.hashCode());
 		report.setTargetChild(x);
+		report.setKeyChild(index);
 		this.__invokeAll_Remove(report);
 	}
 
@@ -85,24 +87,21 @@ public class ExListWap<E> implements I_ListCommon<E>{
 		if(report.isPathContains(this))
 			return;
 	
-		this.__invokeAll_Remove(report);
-		
-		E tobj = (E) report.getTargetChild();
-		if(this.trueList.contains(tobj))
-			this.trueList.remove(tobj);
+		int index = (int) report.getKeyChild();
+		this.removeChild(this.getChildAtIndex(index));
 	}
 
 	@Override
 	public void targetInsert(I_ElementEventReport<?, ?> report) {
 		if(report.isPathContains(this))
 			return;
-	
-		this.__invokeAll_Insert(report);
 		
-		E tobj = (E) report.getTargetChild();
+		E tobj = this.dataProcAtInsert(report);
 		int index = (int) report.getKeyChild();
-		this.trueList.add(index, tobj);
+		this.insertChildAtIndex(tobj, index);
 	}
+	@Override
+	public abstract E dataProcAtInsert(I_ElementEventReport<?, ?> report);
 
 	@Override
 	public void clearAll() {

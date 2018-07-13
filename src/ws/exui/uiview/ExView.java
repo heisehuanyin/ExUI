@@ -11,6 +11,7 @@ import ws.exui.binding.ExO4Binding;
 import ws.exui.binding.I_ListCommon;
 import ws.exui.binding.I_Object4BindingCommon;
 import ws.exui.binding.I_ValueCommon;
+import ws.exui.event.I_ElementEventReport;
 import ws.exui.event.I_UIExEvent;
 import ws.exui.event.ViewRefreshRequest;
 import ws.exui.uibase.WEmptyTransform;
@@ -36,8 +37,16 @@ public abstract class ExView extends ExO4Binding implements I_View{
 	private boolean isFresh = true;
 	private Color c = Color.white;
 	private I_Transform trans = new WEmptyTransform();
+	private I_UIBuilder<I_Object4BindingCommon> builder = null;
 	
-	private I_ListCommon<I_Object4BindingCommon> children = new ExListWap<>();
+	private I_ListCommon<I_Object4BindingCommon> children = new ExListWap<>() {
+		@Override
+		public I_Object4BindingCommon dataProcAtInsert(I_ElementEventReport<?, ?> report) {
+			if(builder == null)
+				return null;
+
+			return builder.generateViewUnitAs((I_Object4BindingCommon) report.getTargetChild());
+		}};
 
 	public ExView() {}
 	
@@ -212,6 +221,11 @@ public abstract class ExView extends ExO4Binding implements I_View{
 		
 		I_UIExEvent e = new ViewRefreshRequest(this, "删除了子视图:"+view.toString());
 		this.event_DispatchUIEvent(e);
+	}
+	
+	@Override
+	public void setUIBuilder(I_UIBuilder<I_Object4BindingCommon> builder) {
+		this.builder = builder;
 	}
 	
 	@Override

@@ -17,6 +17,10 @@ import ws.exui.uibase.WGraphicsPort;
 public interface I_View extends I_Object4BindingCommon{
 
 	/**
+	 * 设置基本尺寸
+	 * @param bSize 基础尺寸*/
+	void size_SetBasicSize(I_Size bSize);
+	/**
 	 * 获取基本尺寸
 	 * @return 返回的基础尺寸实例*/
 	I_Size size_GetBasicSize();
@@ -72,6 +76,21 @@ public interface I_View extends I_Object4BindingCommon{
 	 * 移除此视图下的特定子视图
 	 * @param view 特定视图*/
 	void view_RemoveViewAtIndex(I_View view);
+	
+	/**
+	 * 设置一个生成器，生成器负责按照模板自动格式化绑定数据，生成对应子视图
+	 * @param builder 构造器，生成器*/
+	void setUIBuilder(I_UIBuilder<I_Object4BindingCommon> builder);
+
+	/**
+	 * 获取次视图的父视图
+	 * @return 父视图实例*/
+	I_View __view_GetParentView();
+
+	/**
+	 * 内部函数，设置父视图
+	 * @param wView 父视图*/
+	void __view_SetParentView(I_View wView);
 
 	/**
 	 * 设置坐标变换单元，在利用绘图端口进行绘图的时候，会自动调用变换单元进行坐标变换
@@ -142,21 +161,7 @@ public interface I_View extends I_Object4BindingCommon{
 	 * 重设子视图尺寸，此方法为内部方法，不建议外部调用*/
 	void __operate_ResizeSubviewSize();
 
-	/**
-	 * 获取次视图的父视图
-	 * @return 父视图实例*/
-	I_View __view_GetParentView();
-
-	/**
-	 * 内部函数，设置父视图
-	 * @param wView 父视图*/
-	void __view_SetParentView(I_View wView);
-
 	void __paintItSelf(I_GraphicsPort port);
 
-	/**
-	 * 设置基本尺寸
-	 * @param bSize 基础尺寸*/
-	void size_SetBasicSize(I_Size bSize);
 
 }

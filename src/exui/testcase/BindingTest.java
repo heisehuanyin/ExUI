@@ -6,6 +6,9 @@ import ws.exui.binding.ExDouble;
 import ws.exui.binding.ExListWap;
 import ws.exui.binding.ExO4Binding;
 import ws.exui.binding.ExString;
+import ws.exui.binding.I_ListCommon;
+import ws.exui.binding.I_Object4BindingCommon;
+import ws.exui.event.I_ElementEventReport;
 
 public class BindingTest {
 	public void testBindBool() {
@@ -70,8 +73,20 @@ public class BindingTest {
 	}
 	public void testList() {
 		ExBindingBridge bridge = new ExBindingBridge(ExBindingBridge.POINT_2_POINT);
-		ExListWap<String> a = new ExListWap<>();
-		ExListWap<String> b = new ExListWap<>();
+		ExListWap<String> a = new ExListWap<>() {
+
+			@Override
+			public String dataProcAtInsert(I_ElementEventReport<?, ?> report) {
+				// TODO Auto-generated method stub
+				return (String) report.getTargetChild();
+			}};
+		ExListWap<String> b = new ExListWap<>() {
+
+			@Override
+			public String dataProcAtInsert(I_ElementEventReport<?, ?> report) {
+				// TODO Auto-generated method stub
+				return (String) report.getTargetChild();
+			}};
 		
 		bridge.Binding(a, b);
 		
@@ -99,5 +114,10 @@ public class BindingTest {
 class ExampleObject extends ExO4Binding{
 	public ExString name = new ExString();
 	public ExDouble number = new ExDouble();
+	@Override
+	public I_ListCommon<I_Object4BindingCommon> getChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
