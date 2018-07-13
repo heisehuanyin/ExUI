@@ -22,4 +22,6 @@ public interface I_ListCommon<E> extends I_ListChangeListener{
 	void autoPush();
 	
 	void clearAll();
+
+	boolean contains(E o);
 }

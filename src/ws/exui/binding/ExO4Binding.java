@@ -3,17 +3,11 @@ package ws.exui.binding;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExO4Binding implements I_Object4BindingCommon{
-	private I_ListCommon<I_Object4BindingCommon> children = new ExListWap<>();
+public abstract class ExO4Binding implements I_Object4BindingCommon{
 	private Map<String, I_ValueCommon> properties = new HashMap<>();
 	
 	public ExO4Binding() {
 		
-	}
-
-	@Override
-	public I_ListCommon<I_Object4BindingCommon> getChildren() {
-		return this.children;
 	}
 
 	@Override

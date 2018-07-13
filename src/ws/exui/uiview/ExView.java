@@ -6,6 +6,11 @@ import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import ws.exui.binding.ExListWap;
+import ws.exui.binding.ExO4Binding;
+import ws.exui.binding.I_ListCommon;
+import ws.exui.binding.I_Object4BindingCommon;
+import ws.exui.binding.I_ValueCommon;
 import ws.exui.event.I_UIExEvent;
 import ws.exui.event.ViewRefreshRequest;
 import ws.exui.uibase.WEmptyTransform;
@@ -19,12 +24,11 @@ import ws.exui.uibase.WMargin;
 import ws.exui.uibase.WPoint;
 import ws.exui.uibase.WSize;
 
-public abstract class ExView implements I_View {
+public abstract class ExView extends ExO4Binding implements I_View{
 	private I_Size basicSize = new WSize(0, 0);
 	private I_Size visibleSize = new WSize(0, 0);
 	private I_Point origin = new WPoint(0, 0);
 	private I_Margin margin = new WMargin(0, 0, 0, 0);
-	private ArrayList<I_View> children = new ArrayList<>();
 	private I_GraphicsPort port = new WGraphicsPort(this);
 	private I_View parent = null;
 	private boolean width_auto = true;
@@ -32,6 +36,8 @@ public abstract class ExView implements I_View {
 	private boolean isFresh = true;
 	private Color c = Color.white;
 	private I_Transform trans = new WEmptyTransform();
+	
+	private I_ListCommon<I_Object4BindingCommon> children = new ExListWap<>();
 
 	public ExView() {}
 	
@@ -181,7 +187,7 @@ public abstract class ExView implements I_View {
 	@Override
 	public void view_InsertViewAtIndex(I_View view, int index) {
 		view.__view_SetParentView(this);
-		this.children.add(index, view);
+		this.children.insertChildAtIndex(view, index);
 		this.fresh_SetFresh(true);
 		
 		I_UIExEvent e = new ViewRefreshRequest(this, "插入了子视图："+view.toString());
@@ -190,18 +196,18 @@ public abstract class ExView implements I_View {
 	
 	@Override
 	public int view_GetChildCount() {
-		return this.children.size();
+		return this.children.getChildCount();
 	}
 	
 	@Override
 	public I_View view_GetChildAtIndex(int index) {
-		return this.children.get(index);
+		return (I_View) this.children.getChildAtIndex(index);
 	}
 	
 	@Override
 	public void view_RemoveViewAtIndex(I_View view) {
 		if(this.children.contains(view))
-			this.children.remove(view);
+			this.children.removeChild(view);
 		this.fresh_SetFresh(true);
 		
 		I_UIExEvent e = new ViewRefreshRequest(this, "删除了子视图:"+view.toString());
@@ -257,4 +263,9 @@ public abstract class ExView implements I_View {
 		
 		return thisShape;
 	}
+	@Override
+	public I_ListCommon<I_Object4BindingCommon> getChildren() {
+		return this.children;
+	}
+
 }

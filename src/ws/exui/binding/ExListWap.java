@@ -118,6 +118,11 @@ public class ExListWap<E> implements I_ListCommon<E>{
 		}
 		return val +"]";
 	}
+
+	@Override
+	public boolean contains(E o) {
+		return this.trueList.contains(o);
+	}
 	
 
 }

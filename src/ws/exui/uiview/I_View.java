@@ -5,6 +5,7 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 
+import ws.exui.binding.I_Object4BindingCommon;
 import ws.exui.event.I_UIExEvent;
 import ws.exui.uibase.I_GraphicsPort;
 import ws.exui.uibase.I_Margin;
@@ -13,7 +14,7 @@ import ws.exui.uibase.I_Size;
 import ws.exui.uibase.I_Transform;
 import ws.exui.uibase.WGraphicsPort;
 
-public interface I_View {
+public interface I_View extends I_Object4BindingCommon{
 
 	/**
 	 * 获取基本尺寸
