@@ -6,7 +6,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import ws.exui.binding.ExListWap;
+import ws.exui.binding.ExList;
 import ws.exui.binding.ExO4Binding;
 import ws.exui.binding.I_ListCommon;
 import ws.exui.binding.I_Object4BindingCommon;
@@ -39,13 +39,15 @@ public abstract class ExView extends ExO4Binding implements I_View{
 	private I_Transform trans = new WEmptyTransform();
 	private I_UIBuilder<I_Object4BindingCommon> builder = null;
 	
-	private I_ListCommon<I_Object4BindingCommon> children = new ExListWap<>() {
+	private I_ListCommon<I_Object4BindingCommon> children = new ExList<>() {
 		@Override
 		public I_Object4BindingCommon dataProcAtInsert(I_ElementEventReport<?, ?> report) {
 			if(builder == null)
 				return null;
-
-			return builder.generateViewUnitAs((I_Object4BindingCommon) report.getTargetChild());
+			
+			I_View v = builder.generateViewUnitAs((I_Object4BindingCommon) report.getTargetChild());
+			v.__view_SetParentView(ExView.this);
+			return v;
 		}};
 
 	public ExView() {}
@@ -119,7 +121,6 @@ public abstract class ExView extends ExO4Binding implements I_View{
 			this.visibleSize = new WSize(this.visibleSize.getHeight(), bSize.getHeight());
 		}
 
-		System.out.println(this.toString() + "设置基础尺寸："+ bSize.toString());
 		
 		I_UIExEvent e = new ViewRefreshRequest(this, "basicSize更新");
 		this.fresh_SetFresh(true);
@@ -146,7 +147,6 @@ public abstract class ExView extends ExO4Binding implements I_View{
 			}
 			
 			this.visibleSize = vSize;
-			System.out.println(this.toString() + "设置可视尺寸："+ vSize.toString());
 			this.fresh_SetFresh(true);
 			this.__operate_ResizeSubviewSize();
 			
@@ -266,7 +266,9 @@ public abstract class ExView extends ExO4Binding implements I_View{
 	 * 派送UI事件*/
 	@Override
 	public void event_DispatchUIEvent(I_UIExEvent e) {
-		this.__view_GetParentView().event_DispatchUIEvent(e);
+		I_View p = this.__view_GetParentView();
+		if(p != null)
+			p.event_DispatchUIEvent(e);
 	}
 	
 

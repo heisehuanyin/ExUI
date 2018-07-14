@@ -3,7 +3,7 @@ package exui.testcase;
 import ws.exui.binding.ExBindingBridge;
 import ws.exui.binding.ExBoolean;
 import ws.exui.binding.ExDouble;
-import ws.exui.binding.ExListWap;
+import ws.exui.binding.ExList;
 import ws.exui.binding.ExO4Binding;
 import ws.exui.binding.ExString;
 import ws.exui.binding.I_ListCommon;
@@ -73,14 +73,14 @@ public class BindingTest {
 	}
 	public void testList() {
 		ExBindingBridge bridge = new ExBindingBridge(ExBindingBridge.POINT_2_POINT);
-		ExListWap<String> a = new ExListWap<>() {
+		ExList<String> a = new ExList<>() {
 
 			@Override
 			public String dataProcAtInsert(I_ElementEventReport<?, ?> report) {
 				// TODO Auto-generated method stub
 				return (String) report.getTargetChild();
 			}};
-		ExListWap<String> b = new ExListWap<>() {
+		ExList<String> b = new ExList<>() {
 
 			@Override
 			public String dataProcAtInsert(I_ElementEventReport<?, ?> report) {

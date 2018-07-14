@@ -228,8 +228,7 @@ class CustomWindow extends Frame implements WindowListener, ComponentListener{
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
+		this.f.setSize(new WSize(this.getBounds().getWidth()+1, this.getBounds().getHeight()+1));
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import ws.exui.event.ElementEventReport;
 import ws.exui.event.I_DataEventReport;
 import ws.exui.event.I_ElementEventReport;
 
-public abstract class ExListWap<E> implements I_ListCommon<E>{
+public abstract class ExList<E> implements I_ListCommon<E>{
 	private ArrayList<I_ListChangeListener> l_list = new ArrayList<>();
 	private ArrayList<E> trueList = new ArrayList<E>();
 
@@ -74,6 +74,8 @@ public abstract class ExListWap<E> implements I_ListCommon<E>{
 
 	@Override
 	public void autoPush() {
+		if(this.trueList.size() == 0)
+			return;
 		ArrayList<E> bakList = new ArrayList<>();
 		bakList.addAll(trueList);
 		trueList.clear();
@@ -82,15 +84,19 @@ public abstract class ExListWap<E> implements I_ListCommon<E>{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void targetRemove(I_ElementEventReport<?, ?> report) {
 		if(report.isPathContains(this))
 			return;
 	
 		int index = (int) report.getKeyChild();
-		this.removeChild(this.getChildAtIndex(index));
+		
+		this.trueList.remove(index);
+		this.__invokeAll_Remove((I_ElementEventReport<Integer, ?>) report);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void targetInsert(I_ElementEventReport<?, ?> report) {
 		if(report.isPathContains(this))
@@ -98,7 +104,9 @@ public abstract class ExListWap<E> implements I_ListCommon<E>{
 		
 		E tobj = this.dataProcAtInsert(report);
 		int index = (int) report.getKeyChild();
-		this.insertChildAtIndex(tobj, index);
+		
+		this.trueList.add(index, tobj);
+		this.__invokeAll_Insert((I_ElementEventReport<Integer, ?>) report);
 	}
 	@Override
 	public abstract E dataProcAtInsert(I_ElementEventReport<?, ?> report);

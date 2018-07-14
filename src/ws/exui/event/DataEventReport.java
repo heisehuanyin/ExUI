@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class DataEventReport implements I_DataEventReport{
 	private Object source = null;
 	private String msg = "valueChange";
-	private ArrayList<String> invokeList = new ArrayList<>();
+	private ArrayList<Object> invokeList = new ArrayList<>();
 	
 	public DataEventReport(Object source, String msg) {
 		this.source = source;
@@ -14,12 +14,13 @@ public class DataEventReport implements I_DataEventReport{
 
 	@Override
 	public void addInvokePath(Object source) {
-		this.invokeList.add(""+source.hashCode());
+		this.invokeList.add(source);
 	}
 
 	@Override
 	public boolean isPathContains(Object source) {
-		return this.invokeList.contains(""+source.hashCode());
+		boolean val = this.invokeList.contains(source);
+		return val;
 	}
 
 	@Override

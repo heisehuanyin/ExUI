@@ -2,10 +2,17 @@ package ws.exui;
 
 import java.awt.Color;
 
+import ws.exui.binding.ExBindingBridge;
+import ws.exui.binding.ExList;
+import ws.exui.binding.ExO4Binding;
+import ws.exui.binding.I_ListCommon;
+import ws.exui.binding.I_Object4BindingCommon;
+import ws.exui.event.I_ElementEventReport;
 import ws.exui.event.I_ExEvent;
 import ws.exui.uibase.WMargin;
 import ws.exui.uibase.WSize;
 import ws.exui.uiview.ExSplitPane;
+import ws.exui.uiview.I_UIBuilder;
 import ws.exui.uiview.I_View;
 import ws.exui.uiwin.ExWindow;
 import ws.exui.uiwin.I_Window;
@@ -21,7 +28,7 @@ public class ExManager implements Runnable{
 	}
 	
 	public void event_AcceptEvent(I_ExEvent e) {
-		
+		System.out.println("&&&&::MsgProc======"+e.getSource().toString() +"《《"+ e.getMsg());
 	}
 
 
@@ -63,6 +70,29 @@ public class ExManager implements Runnable{
 		exw.view_InsertViewAtIndex(v_one, exw.view_GetChildCount());
 		v_one.color_SetColor(Color.green);
 		v_one.margin_SetMargin(new WMargin(2,2,2,0));
+		v_one.setUIBuilder(new I_UIBuilder<I_Object4BindingCommon>() {
+			@Override
+			public I_View generateViewUnitAs(I_Object4BindingCommon d_unit) {
+				I_View view = new ExSplitPane(ExSplitPane.HORIZONTAL);
+				view.color_SetColor(Color.WHITE);
+				view.margin_SetMargin(new WMargin(3,3,3,3));
+				return view;
+			}
+			
+		});
+		
+		ExBindingBridge bridge = new ExBindingBridge(ExBindingBridge.POINT_2_POINT);
+		bridge.Binding(new ExO4Binding() {
+			private I_ListCommon<I_Object4BindingCommon> strCon = new TemplateExListWap();
+			@Override
+			public I_ListCommon<I_Object4BindingCommon> getChildren() {
+				return this.strCon;
+			}
+			
+		}, v_one);
+		
+		
+		
 		
 		v_one = new ExSplitPane(ExSplitPane.HORIZONTAL);
 		exw.view_InsertViewAtIndex(v_one, exw.view_GetChildCount());
@@ -82,5 +112,15 @@ public class ExManager implements Runnable{
 		new Thread(vm).start();
 	}
 
+	static class TemplateExListWap extends ExList<I_Object4BindingCommon>{
+		public TemplateExListWap() {
+			this.insertChildAtIndex(new ExSplitPane(0), 0);
+			this.insertChildAtIndex(new ExSplitPane(0), 0);
+			this.insertChildAtIndex(new ExSplitPane(0), 0);
+		}
 
+		@Override
+		public I_Object4BindingCommon dataProcAtInsert(I_ElementEventReport<?, ?> report) {
+			return (I_Object4BindingCommon) report.getTargetChild();
+		}}
 }
