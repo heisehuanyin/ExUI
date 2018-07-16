@@ -8,19 +8,19 @@ public class ElementEventReport<K,V> extends DataEventReport implements I_Elemen
 		super(source, msg);
 	}
 	@Override
-	public void setTargetChild(V child) {
+	public void setTargetValue(V child) {
 		this.childTarget = child;
 	}
 	@Override
-	public V getTargetChild() {
+	public V getTargetValue() {
 		return this.childTarget;
 	}
 	@Override
-	public void setKeyChild(K ckey) {
+	public void setTargetKey(K ckey) {
 		this.childKey = ckey;
 	}
 	@Override
-	public K getKeyChild() {
+	public K getTargetKey() {
 		return this.childKey;
 	}
 

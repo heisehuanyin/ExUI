@@ -24,6 +24,8 @@ import exui.uibase.WGraphicsPort;
 import exui.uibase.WMargin;
 import exui.uibase.WPoint;
 import exui.uibase.WSize;
+import exui.uibuilder.I_ViewBuilder;
+import exui.uiwin.I_Window;
 
 public abstract class ExView extends ExO4Binding implements I_View{
 	private I_Size basicSize = new WSize(0, 0);
@@ -37,7 +39,7 @@ public abstract class ExView extends ExO4Binding implements I_View{
 	private boolean isFresh = true;
 	private Color c = Color.white;
 	private I_Transform trans = new WEmptyTransform();
-	private I_UIBuilder<I_Object4BindingCommon> builder = null;
+	private I_ViewBuilder<I_Object4BindingCommon> builder = null;
 	
 	private I_ListCommon<I_Object4BindingCommon> children = new ExList<>() {
 		@Override
@@ -45,7 +47,7 @@ public abstract class ExView extends ExO4Binding implements I_View{
 			if(builder == null)
 				return null;
 			
-			I_View v = builder.generateViewUnitAs((I_Object4BindingCommon) report.getTargetChild());
+			I_View v = builder.generateViewUnitAs((I_Object4BindingCommon) report.getTargetValue());
 			v.__view_SetParentView(ExView.this);
 			return v;
 		}};
@@ -224,7 +226,7 @@ public abstract class ExView extends ExO4Binding implements I_View{
 	}
 	
 	@Override
-	public void setUIBuilder(I_UIBuilder<I_Object4BindingCommon> builder) {
+	public void setUIBuilder(I_ViewBuilder<I_Object4BindingCommon> builder) {
 		this.builder = builder;
 	}
 	
@@ -282,6 +284,18 @@ public abstract class ExView extends ExO4Binding implements I_View{
 	@Override
 	public I_ListCommon<I_Object4BindingCommon> getChildren() {
 		return this.children;
+	}
+	
+	@Override
+	public I_Window window_getOwner() {
+		I_View x = this;
+		for(;;) {
+			x = x.__view_GetParentView();
+			if(x instanceof I_Window)
+				break;
+		}
+		
+		return (I_Window) x;
 	}
 
 }

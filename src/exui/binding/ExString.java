@@ -32,7 +32,7 @@ public class ExString implements I_ValueCommon{
 		if(e.isPathContains(this))
 			return;
 		
-		this.val = ((ExString)e.getSource()).getValue();
+		this.val = ((ExString)e.getPrimarySource()).getValue();
 		this.__invokeAll(e);
 	}
 	

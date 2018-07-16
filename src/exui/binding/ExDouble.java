@@ -32,7 +32,7 @@ public class ExDouble implements I_ValueCommon {
 		if(e.isPathContains(this))
 			return;
 		
-		this.val = ((ExDouble)e.getSource()).getValue();
+		this.val = ((ExDouble)e.getPrimarySource()).getValue();
 		this.__invokeAll(e);
 	}
 	

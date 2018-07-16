@@ -10,6 +10,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.Map;
 
 import exui.ExManager;
 import exui.event.I_UIExEvent;
@@ -26,10 +28,10 @@ public class ExWindow extends ExSplitPane implements I_Window {
 	private I_Size basicOutline = new WSize(400,300);
 	private ExManager ctl = null;
 	private I_GraphicsPort gport;
+	private Map<String, Object> resourceCon = new HashMap<>();
 	
-	public ExWindow(String string, I_Size miniSize, ExManager ctl) {
+	public ExWindow(String string, I_Size miniSize) {
 		super(ExSplitPane.VERTICAL);
-		this.ctl = ctl;
 		if(miniSize != null)
 			this.basicOutline = miniSize;
 		this.window.setMinimumSize(new Dimension((int)this.basicOutline.getWidth(), (int)this.basicOutline.getHeight()));
@@ -63,29 +65,42 @@ public class ExWindow extends ExSplitPane implements I_Window {
 	}
 	
 	@Override
-	public void __display() {
+	public void __display(ExManager ctl) {
+		this.ctl = ctl;
 		this.window.addWindowListener((CustomWindow)this.window);
 		this.window.setVisible(true);
 	}
-	//WView============================================================
-
+	
 	@Override
 	public void __paintItSelf(I_GraphicsPort port) {
 		Rectangle2D.Double shape = new Rectangle2D.Double(0, 0,
 				this.size_GetVisibleSize().getWidth(), this.size_GetVisibleSize().getHeight());
 		port.fillShape(shape, null);
 	}
+	
 	/**
 	 * 派送UI事件*/
 	@Override
 	public void event_DispatchUIEvent(I_UIExEvent e) {
-		ctl.event_AcceptEvent(e);
+		if(this.ctl != null)
+			ctl.event_AcceptEvent(e);
 	}
+	
 	@Override
 	public I_GraphicsPort gport_getGraphicsPort() {
 		return this.gport;
 	}
 
+	@Override
+	public Object getResource(String id) {
+		return this.resourceCon.get(id);
+	}
+	
+	@Override
+	public void registerResource(String id, Object obj) {
+		this.resourceCon.put(id, obj);
+	}
+	
 }
 
 

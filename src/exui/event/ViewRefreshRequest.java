@@ -17,7 +17,7 @@ public class ViewRefreshRequest implements I_UIExEvent {
 	}
 
 	@Override
-	public I_View getSource() {
+	public I_View getPrimarySource() {
 		return this.source;
 	}
 

@@ -43,8 +43,8 @@ public abstract class ExList<E> implements I_ListCommon<E>{
 		
 		I_ElementEventReport<Integer, E> report = new ElementEventReport<>(this, 
 				this.hashCode()+ "insert:position="+ index+ ",obj="+ x.hashCode());
-		report.setKeyChild(index);
-		report.setTargetChild(x);
+		report.setTargetKey(index);
+		report.setTargetValue(x);
 		this.__invokeAll_Insert(report);
 	}
 
@@ -57,8 +57,8 @@ public abstract class ExList<E> implements I_ListCommon<E>{
 
 		I_ElementEventReport<Integer,E> report = new ElementEventReport<>(this, 
 				this.hashCode()+ "remove:position="+ index+ ",obj="+ x.hashCode());
-		report.setTargetChild(x);
-		report.setKeyChild(index);
+		report.setTargetValue(x);
+		report.setTargetKey(index);
 		this.__invokeAll_Remove(report);
 	}
 
@@ -90,7 +90,7 @@ public abstract class ExList<E> implements I_ListCommon<E>{
 		if(report.isPathContains(this))
 			return;
 	
-		int index = (int) report.getKeyChild();
+		int index = (int) report.getTargetKey();
 		
 		this.trueList.remove(index);
 		this.__invokeAll_Remove((I_ElementEventReport<Integer, ?>) report);
@@ -103,7 +103,7 @@ public abstract class ExList<E> implements I_ListCommon<E>{
 			return;
 		
 		E tobj = this.dataProcAtInsert(report);
-		int index = (int) report.getKeyChild();
+		int index = (int) report.getTargetKey();
 		
 		this.trueList.add(index, tobj);
 		this.__invokeAll_Insert((I_ElementEventReport<Integer, ?>) report);

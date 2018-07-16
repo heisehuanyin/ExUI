@@ -24,7 +24,7 @@ public class DataEventReport implements I_DataEventReport{
 	}
 
 	@Override
-	public Object getSource() {
+	public Object getPrimarySource() {
 		return this.source;
 	}
 

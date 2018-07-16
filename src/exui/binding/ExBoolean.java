@@ -33,7 +33,7 @@ public class ExBoolean implements I_ValueCommon{
 		if(e.isPathContains(this))
 			return;
 		
-		this.val = ((ExBoolean)e.getSource()).getValue();
+		this.val = ((ExBoolean)e.getPrimarySource()).getValue();
 		this.__invokeAll(e);
 	}
 

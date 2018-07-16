@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<Description>
+	<Resource>
+		<Color id="black" r="0" g="0" b="0" a="0"></Color>
+		<Color id="white" r="255" g="255" b="255" a="255"></Color>
+		<WEmptyTransform id="empty"></WEmptyTransform>	
+	</Resource>
+	<ExWindow id="window" basicSize="{new WSize(400,300)}" title="null - window" size="{new WSize(800,600)}" >
+		<!-- 通过 "@" 援引特定id对象, 通过 "new" 新建对象 -->
+		<ExSplitPane id="menubar" basicSize="{new WSize(20,20)}" color="{@black}" margin="{new WMargin(0,0,0,0)}" adjustAtuo="{true, false}">
+		</ExSplitPane>
+		<ExSplitPane color="{@white}" margin="{new WMargin(2,2,2,2)}"></ExSplitPane>
+	</ExWindow>
+
+</Description>

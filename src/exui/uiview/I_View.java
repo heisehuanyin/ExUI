@@ -13,6 +13,8 @@ import exui.uibase.I_Point;
 import exui.uibase.I_Size;
 import exui.uibase.I_Transform;
 import exui.uibase.WGraphicsPort;
+import exui.uibuilder.I_ViewBuilder;
+import exui.uiwin.I_Window;
 
 public interface I_View extends I_Object4BindingCommon{
 
@@ -80,7 +82,7 @@ public interface I_View extends I_Object4BindingCommon{
 	/**
 	 * 设置一个生成器，生成器负责按照模板自动格式化绑定数据，生成对应子视图
 	 * @param builder 构造器，生成器*/
-	void setUIBuilder(I_UIBuilder<I_Object4BindingCommon> builder);
+	void setUIBuilder(I_ViewBuilder<I_Object4BindingCommon> builder);
 
 	/**
 	 * 获取次视图的父视图
@@ -162,6 +164,11 @@ public interface I_View extends I_Object4BindingCommon{
 	void __operate_ResizeSubviewSize();
 
 	void __paintItSelf(I_GraphicsPort port);
+	
+	/**
+	 * 获取所有此视图的窗体，主要用于获取绑定在本窗体的资源
+	 * @return 返回的绑定窗体*/
+	I_Window window_getOwner();
 
 
 }

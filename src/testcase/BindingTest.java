@@ -78,14 +78,14 @@ public class BindingTest {
 			@Override
 			public String dataProcAtInsert(I_ElementEventReport<?, ?> report) {
 				// TODO Auto-generated method stub
-				return (String) report.getTargetChild();
+				return (String) report.getTargetValue();
 			}};
 		ExList<String> b = new ExList<>() {
 
 			@Override
 			public String dataProcAtInsert(I_ElementEventReport<?, ?> report) {
 				// TODO Auto-generated method stub
-				return (String) report.getTargetChild();
+				return (String) report.getTargetValue();
 			}};
 		
 		bridge.Binding(a, b);

@@ -1,6 +1,6 @@
 package exui.event;
 
 public interface I_ExEvent {
-	Object getSource();
+	Object getPrimarySource();
 	String getMsg();
 }

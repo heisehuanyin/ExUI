@@ -10,11 +10,11 @@ public class ExManager implements Runnable{
 	 * 打开指定窗口
 	 * @param exw 指定窗口实例*/
 	public void openWindow(I_Window exw) {
-		exw.__display();
+		exw.__display(this);
 	}
 	
 	public void event_AcceptEvent(I_ExEvent e) {
-		System.out.println("&&&&::MsgProc======"+e.getSource().toString() +"《《"+ e.getMsg());
+		System.out.println("&&&&::MsgProc======"+e.getPrimarySource().toString() +"《《"+ e.getMsg());
 	}
 
 
