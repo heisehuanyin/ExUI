@@ -8,9 +8,13 @@ import exui.event.ElementEventReport;
 import exui.event.I_DataEventReport;
 import exui.event.I_ElementEventReport;
 
-public abstract class ExList<E> implements I_ListCommon<E> {
+/**
+ * 被类型专门为view添加了一个控制位，可以控制这个list是否响应绑定数据变动，</br>
+ * 即使不响应数据变动，绑定数据源的变动也可以随着绑定链条传递下去。*/
+public abstract class List4View<E> implements I_ListCommon<E> {
 	private ArrayList<I_ListChangeListener> l_list = new ArrayList<>();
 	private ArrayList<E> trueList = new ArrayList<E>();
+	private boolean syncSwitch = true;
 
 	@Override
 	public void addChangeListener(I_ListChangeListener l) {
@@ -89,10 +93,11 @@ public abstract class ExList<E> implements I_ListCommon<E> {
 		if (report.isPathContains(this))
 			return;
 
-		int index = (int) report.getTargetKey();
+		if(this.syncSwitch) {
+			int index = (int) report.getTargetKey();
 
-		this.trueList.remove(index);
-
+			this.trueList.remove(index);
+		}
 		this.__invokeAll_Remove((I_ElementEventReport<Integer, ?>) report);
 	}
 
@@ -102,11 +107,12 @@ public abstract class ExList<E> implements I_ListCommon<E> {
 		if (report.isPathContains(this))
 			return;
 
-		E tobj = this.dataProcAtInsert(report);
-		int index = (int) report.getTargetKey();
+		if(this.syncSwitch) {
+			E tobj = this.dataProcAtInsert(report);
+			int index = (int) report.getTargetKey();
 
-		this.trueList.add(index, tobj);
-
+			this.trueList.add(index, tobj);
+		}
 		this.__invokeAll_Insert((I_ElementEventReport<Integer, ?>) report);
 	}
 
@@ -115,7 +121,8 @@ public abstract class ExList<E> implements I_ListCommon<E> {
 
 	@Override
 	public void clearAll() {
-		this.trueList.clear();
+		if(this.syncSwitch)
+			this.trueList.clear();
 	}
 
 	@Override
@@ -131,5 +138,13 @@ public abstract class ExList<E> implements I_ListCommon<E> {
 	@Override
 	public boolean contains(E o) {
 		return this.trueList.contains(o);
+	}
+
+	public void passiveSwitch(boolean flag) {
+		this.syncSwitch = flag;
+	}
+	
+	public boolean getPassiveStatue() {
+		return this.syncSwitch;
 	}
 }

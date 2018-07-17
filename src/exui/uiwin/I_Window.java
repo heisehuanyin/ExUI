@@ -2,13 +2,18 @@ package exui.uiwin;
 
 import exui.ExManager;
 import exui.uibase.I_Size;
+import exui.uibase.WSize;
+import exui.uiview.I_View;
 
-public interface I_Window {
+public interface I_Window extends I_View{
 	/**
 	 * 是一个立即执行方法,设置窗口大小
 	 * @param size 是一个记录了宽高的实例*/
 	void setSize(I_Size size);
-
+	/**
+	 * 设定一个窗体最小尺寸
+	 * @param size 最小尺寸*/
+	void setMiniSize(I_Size size);
 	/**
 	 * 内部方法，显示窗口。所有内部调用的方法都用"__"前缀标识
 	 * @param ctl TODO*/
@@ -30,6 +35,7 @@ public interface I_Window {
 	 * @param id 资源key
 	 * @return 资源*/
 	Object getResource(String id);
+
 
 
 

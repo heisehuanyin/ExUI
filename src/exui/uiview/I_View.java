@@ -82,7 +82,7 @@ public interface I_View extends I_Object4BindingCommon{
 	/**
 	 * 设置一个生成器，生成器负责按照模板自动格式化绑定数据，生成对应子视图
 	 * @param builder 构造器，生成器*/
-	void setUIBuilder(I_ViewBuilder<I_Object4BindingCommon> builder);
+	void view_setUIBuilder(I_ViewBuilder<I_Object4BindingCommon> builder);
 
 	/**
 	 * 获取次视图的父视图
@@ -163,12 +163,20 @@ public interface I_View extends I_Object4BindingCommon{
 	 * 重设子视图尺寸，此方法为内部方法，不建议外部调用*/
 	void __operate_ResizeSubviewSize();
 
-	void __paintItSelf(I_GraphicsPort port);
+	void __operate_paintItSelf(I_GraphicsPort port);
 	
 	/**
 	 * 获取所有此视图的窗体，主要用于获取绑定在本窗体的资源
 	 * @return 返回的绑定窗体*/
 	I_Window window_getOwner();
+	
+	/**
+	 * 设置此时图的被动状态*/
+	void setPassiveStatue(boolean statue);
+	
+	/**
+	 * 获取此时图的被动状态*/
+	boolean getPassiveStatue();
 
 
 }

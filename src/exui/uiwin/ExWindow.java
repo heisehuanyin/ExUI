@@ -65,6 +65,16 @@ public class ExWindow extends ExSplitPane implements I_Window {
 	}
 	
 	@Override
+	public void setMiniSize(I_Size size) {
+		this.basicOutline = size;
+		this.window.setMinimumSize(new Dimension((int)size.getWidth(), (int)size.getHeight()));
+		
+		I_Size vSize = new WSize(basicOutline.getWidth() -window.getInsets().left -window.getInsets().right,
+				basicOutline.getHeight() -window.getInsets().top -window.getInsets().bottom);
+		this.size_SetBasicSize(vSize);
+	}
+	
+	@Override
 	public void __display(ExManager ctl) {
 		this.ctl = ctl;
 		this.window.addWindowListener((CustomWindow)this.window);
@@ -72,7 +82,7 @@ public class ExWindow extends ExSplitPane implements I_Window {
 	}
 	
 	@Override
-	public void __paintItSelf(I_GraphicsPort port) {
+	public void __operate_paintItSelf(I_GraphicsPort port) {
 		Rectangle2D.Double shape = new Rectangle2D.Double(0, 0,
 				this.size_GetVisibleSize().getWidth(), this.size_GetVisibleSize().getHeight());
 		port.fillShape(shape, null);
@@ -100,6 +110,7 @@ public class ExWindow extends ExSplitPane implements I_Window {
 	public void registerResource(String id, Object obj) {
 		this.resourceCon.put(id, obj);
 	}
+	
 	
 }
 
@@ -202,7 +213,7 @@ class CustomWindow extends Frame implements WindowListener, ComponentListener{
 	
 	private void paintOneByOne(I_View v) {
 		I_GraphicsPort g = v.gport_getGraphicsPort();
-		v.__paintItSelf(g);
+		v.__operate_paintItSelf(g);
 		
 		for(int i=0;i<v.view_GetChildCount();++i) {
 			I_View x = v.view_GetChildAtIndex(i);

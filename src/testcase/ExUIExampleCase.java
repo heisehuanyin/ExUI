@@ -48,7 +48,7 @@ public class ExUIExampleCase {
 		exw.view_InsertViewAtIndex(v_one, exw.view_GetChildCount());
 		v_one.color_SetColor(Color.green);
 		v_one.margin_SetMargin(new WMargin(2, 2, 2, 0));
-		v_one.setUIBuilder(new I_ViewBuilder<I_Object4BindingCommon>() {
+		v_one.view_setUIBuilder(new I_ViewBuilder<I_Object4BindingCommon>() {
 			@Override
 			public I_View generateViewUnitAs(I_Object4BindingCommon d_unit) {
 				I_View view = new ExSplitPane(ExSplitPane.HORIZONTAL);

@@ -95,7 +95,7 @@ public class ExSplitPane extends ExView {
 	}
 
 	@Override
-	public void __paintItSelf(I_GraphicsPort port) {
+	public void __operate_paintItSelf(I_GraphicsPort port) {
 		Rectangle2D.Double varea = new Rectangle2D.Double(0, 0,
 				this.size_GetVisibleSize().getWidth(), this.size_GetVisibleSize().getHeight());
 		
