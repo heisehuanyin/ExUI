@@ -50,7 +50,7 @@ public class ExUIExampleCase {
 		v_one.margin_SetMargin(new WMargin(2, 2, 2, 0));
 		v_one.view_setUIBuilder(new I_ViewBuilder<I_Object4BindingCommon>() {
 			@Override
-			public I_View generateViewUnitAs(I_Object4BindingCommon d_unit) {
+			public I_View generateViewUnitAs(I_View view2Res) {
 				I_View view = new ExSplitPane(ExSplitPane.HORIZONTAL);
 				view.color_SetColor(Color.WHITE);
 				view.margin_SetMargin(new WMargin(3, 3, 3, 3));

@@ -41,15 +41,17 @@ public abstract class ExView extends ExO4Binding implements I_View {
 	private Color c = Color.white;
 	private I_Transform trans = new WEmptyTransform();
 	private I_ViewBuilder<I_Object4BindingCommon> builder = null;
+	private I_Object4BindingCommon targetValue;
 
-	private List4View<I_Object4BindingCommon> children = new List4View<>() {
+	private ExList<I_Object4BindingCommon> children = new ExList<>() {
 		@Override
 		public I_Object4BindingCommon dataProcAtInsert(I_ElementEventReport<?, ?> report) {
 			if (builder == null)
 				return null;
 
-			I_View v = builder.generateViewUnitAs((I_Object4BindingCommon) report.getTargetValue());
+			I_View v = builder.generateViewUnitAs(ExView.this);
 			v.__view_SetParentView(ExView.this);
+			v.set_CorrespondingObject((I_Object4BindingCommon) report.getTargetValue());
 			return v;
 		}
 	};
@@ -308,15 +310,14 @@ public abstract class ExView extends ExO4Binding implements I_View {
 
 		return (I_Window) x;
 	}
-	
-	@Override
-	public void setPassiveStatue(boolean statue) {
-		this.children.passiveSwitch(statue);
-	}
 
 	@Override
-	public boolean getPassiveStatue() {
-		return this.children.getPassiveStatue();
+	public void set_CorrespondingObject(I_Object4BindingCommon targetValue) {
+		this.targetValue = targetValue;
+	}
+
+	public I_Object4BindingCommon get_CorrespondingObject() {
+		return this.targetValue;
 	}
 
 }

@@ -171,12 +171,9 @@ public interface I_View extends I_Object4BindingCommon{
 	I_Window window_getOwner();
 	
 	/**
-	 * 设置此时图的被动状态*/
-	void setPassiveStatue(boolean statue);
-	
-	/**
-	 * 获取此时图的被动状态*/
-	boolean getPassiveStatue();
+	 * 设置对应的对象，用于自动增殖过程中的对应对象指定
+	 * @param targetValue 对应对象*/
+	void set_CorrespondingObject(I_Object4BindingCommon targetValue);
 
 
 }

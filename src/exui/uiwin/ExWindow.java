@@ -110,8 +110,11 @@ public class ExWindow extends ExSplitPane implements I_Window {
 	public void registerResource(String id, Object obj) {
 		this.resourceCon.put(id, obj);
 	}
-	
-	
+
+	@Override
+	public I_View __view_GetParentView() {
+		return this;
+	}
 }
 
 

@@ -2,6 +2,7 @@ package exui.uiview;
 
 import java.awt.geom.Rectangle2D;
 
+import exui.binding.I_Object4BindingCommon;
 import exui.uibase.I_GraphicsPort;
 import exui.uibase.I_Point;
 import exui.uibase.I_Size;
