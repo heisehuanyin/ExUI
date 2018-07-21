@@ -315,7 +315,8 @@ public abstract class ExView extends ExO4Binding implements I_View {
 	public void set_CorrespondingObject(I_Object4BindingCommon targetValue) {
 		this.targetValue = targetValue;
 	}
-
+	
+	@Override
 	public I_Object4BindingCommon get_CorrespondingObject() {
 		return this.targetValue;
 	}

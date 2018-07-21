@@ -15,6 +15,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import exui.binding.ExBindingBridge;
 import exui.binding.I_Object4BindingCommon;
 import exui.uibase.I_Margin;
 import exui.uibase.I_Size;
@@ -144,6 +145,32 @@ class XmlViewBuilder implements I_ViewBuilder<I_Object4BindingCommon> {
 			rtn.size_SetBasicSize(bs);
 		}
 		// binding
+		String _binding = this.viewNode.getAttribute("binding");
+		if (!_binding.equals("")) {
+			if (_binding.startsWith("@")) {
+				if (_binding.equals("@__binding")) {
+					I_View one = rtn;
+					while(!(one instanceof I_Window)) {
+						one = one.__view_GetParentView();
+						if(one.get_CorrespondingObject()!=null) {
+							I_Object4BindingCommon y = one.get_CorrespondingObject();
+							if(y!=null) {
+								new ExBindingBridge(ExBindingBridge.POINT_2_POINT).Binding(y, rtn);
+							}
+						}
+					}
+				} else {
+					I_View x = (I_View) view2Res.window_getOwner().getResource(_binding);
+					I_Object4BindingCommon y = x.get_CorrespondingObject();
+					if(y!=null) {
+						new ExBindingBridge(ExBindingBridge.POINT_2_POINT).Binding(y, rtn);
+					}
+				}
+
+			} else {
+				view2Res.window_getOwner().registerResource(_binding, rtn);
+			}
+		}
 
 		/////////////////////////
 		String binding = this.viewNode.getAttribute("binding");
@@ -156,7 +183,7 @@ class XmlViewBuilder implements I_ViewBuilder<I_Object4BindingCommon> {
 				XmlViewBuilder xb = new XmlViewBuilder((Element) list.item(i));
 				rtn.view_setUIBuilder(xb);
 				I_View xv = xb.generateViewUnitAs(rtn);
-				
+
 				if (xv != null) {
 					rtn.view_InsertViewAtIndex(xv, rtn.view_GetChildCount());
 				}
@@ -166,7 +193,6 @@ class XmlViewBuilder implements I_ViewBuilder<I_Object4BindingCommon> {
 		if (binding != null && (!binding.equals("")) && num > 1) {
 			System.out.println("ERROR：视图节点内含子视图数量超过1，如果进行绑定行为，只有最后一个子视图自动增殖！！");
 		}
-
 
 		return rtn;
 	}
